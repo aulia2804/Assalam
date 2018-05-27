@@ -97,3 +97,7 @@
   </script>
 </body>
 </html>
+
+$tran = DB::getPdo('transaksi_pembelian')->lastInsertId();
+        $dt = TransaksiPembelian::where('id_pembelian',$tran)->get();
+        return view('tambah_barang', compact('data'));

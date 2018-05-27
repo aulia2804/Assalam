@@ -8,10 +8,11 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <form action="" method="post">
+    <form action="{{URL::to('login')}}" method="post">
+      {{ csrf_field() }}
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Nama pengguna" name="username">
-        <!-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> -->
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="password" class="form-control" placeholder="Kata sandi" name="password">
@@ -19,14 +20,9 @@
       </div>
       <div class="row">
         <div class="col-xs-4 pull-right">
-          <a href="{{URL::to('beranda')}}" type="submit" class="btn btn-primary btn-block btn-flat">Masuk</a>
+          <input type="submit" class="btn btn-primary" name="masuk" value="Masuk">
         </div>
         <!-- /.col -->
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-        {{-- <p>belum punya akun?<a href="">Daftar</a></p> --}}
-        </div>
       </div>
     </form>
   </div>

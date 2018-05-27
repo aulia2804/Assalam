@@ -23,17 +23,16 @@
         <li class="active">Transaksi Penjualan</li>
       </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
-
-      <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
           <h3 class="box-title">Transaksi</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body" style="background-color: #d2d6de">
+          <form action="{{route('transaksi_penjualan.store')}}" method="POST">
+            {{ csrf_field() }}
           <div class="row" style="padding-left: 200px">
             <div class="col-md-4">
               <!-- Date -->
@@ -44,53 +43,44 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                  <input type="text" class="form-control pull-right" id="datepicker" name="tanggal">
                 </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
-
               <div class="form-group">
                 <label>Pembayaran :</label>
-                <select class="form-control" style="width: 200px">
-                  <option selected="selected">Tunai</option>
-                  <option>Tempo</option>
+                <select class="form-control" style="width: 200px" name="cara">
+                  <option value="">Pilih Jenis Pembayaran</option>
+                  <option value="Tunai">Tunai</option>
+                  <option value="Kredit">Kredit</option>
                 </select>
               </div>
               <!-- /.form-group -->
-
-              <!-- Date -->
-              <div class="form-group">
-                <label>Tanggal Jatuh Tempo :</label>
-                <!--input-->
-                <div class="input-group date" style="width: 250px">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
-                </div>
-                <!-- /.input group -->
-              </div>
-              <!-- /.form group -->
             </div>
             <!-- /.col -->
             <div class="col-md-6">
               <div class="form-group" style="width: 300px">
-                <label>Pelanggan</label>
-                <!-- text input -->
-                <input type="text" class="form-control" name="nama">
+                <label>Pelanggan :</label> 
+                <select class="form-control select2" style="width: 85%;" id="pelanggan" name="pelanggan">
+                  <option value="">Pilih Pelanggan</option>
+                  @foreach($pelanggan as $pelanggans)
+                  <option value="{{$pelanggans->id_pelanggan}}">{{$pelanggans->nama_pelanggan}}</option>
+                  @endforeach
+                </select>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus"></i></button>
               </div>
               <!-- /.form-group -->
               <div class="form-group" style="width: 250px">
                 <label>Kontak :</label> 
                 <!-- text input -->
-                <input type="text" class="form-control" name="kontak">
+                <input type="text" class="form-control" name="kontak" id="kontak" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group" style="width: 400px">
                 <label>Alamat :</label> 
                 <!-- text input -->
-                <input type="text" class="form-control" name="alamat">
+                <input type="text" class="form-control" name="alamat" id="alamat" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -98,131 +88,9 @@
           </div>
           <!-- /.row -->
           <div class="col-md-10">
-            <button type="submit" class="btn btn-success pull-right" style="margin-top: 25px">Selanjutnya</button>
+            <input type="submit" class="btn btn-success pull-right" value="Simpan">
           </div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-header with-border">
-          <h3 class="box-title">Barang</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body" style="background-color: #d2d6de">
-          <div class="row">
-            <div class="col-md-1">
-              <!-- /.form-group -->
-              <div class="form-group" style="width: 100%;">
-                <label>ID :</label> 
-                <!-- text input -->
-                <input type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Nama Barang</label>
-                <select class="form-control" style="width: 100%;">
-                  <option selected="selected">Kayu</option>
-                  <option>Semen</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <!-- /.form-group -->
-              <div class="form-group" style="width: 100%;">
-                <label>Harga Jual :</label> 
-                <!-- text input -->
-                <input type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-1">
-              <!-- /.form-group -->
-              <div class="form-group" style="width: 100%;">
-                <label>Jumlah :</label> 
-                <!-- text input -->
-                <input type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <!-- /.form-group -->
-              <div class="form-group" style="width: 100%;">
-                <label>Total :</label> 
-                <!-- text input -->
-                <input type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-primary" style="margin-top: 25px">Tambah</button>
-            </div>
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.box-body -->
-        <div class="box-header with-border">
-          <h3 class="box-title">Daftar Penjualan Barang</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-bordered">
-                <tr style="background-color: #d2d6de">
-                  <th style="width: 15px" class="text-center">No</th>
-                  <th style="width: 15px" class="text-center">ID Jual</th>
-                  <th class="text-center">Nama Barang</th>
-                  <th style="width: 150px" class="text-center">Harga Barang</th>
-                  <th style="width: 100px" class="text-center">Jumlah</th>
-                  <th style="width: 150px" class="text-center">Total Harga</th>
-                  <th style="width: 100px"></th>
-                </tr>
-                <tr style="text-align: center;">
-                  <td>1</td>
-                  <td>1</td>
-                  <td>Semen</td>
-                  <td>50000</td>
-                  <td>3</td>
-                  <td>150000</td>
-                  <td>
-                    <a href="#" class="btn btn-danger btn-xs"></i>Hapus</a>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <!-- /.row -->
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-10">
-                <label class="pull-right">
-                  Total
-                </label>
-              </div>
-              <div class="col-md-2">
-                <label>
-                  150000
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-10">
-                <label class="pull-right">
-                  Uang Muka
-                </label>
-              </div>
-              <div class="col-md-2">
-                <input type="text" name="uangmuka" style="width: 80%;">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <a href="{{URL::to('data_transaksi_penjualan')}}" class="btn btn-default" style="margin-top: 25px">Kembali</a>
-          </div>
-          <div class="col-md-6">
-            <a href="{{URL::to('')}}" class="btn btn-primary pull-right" style="margin-top: 25px">Selesai</a>
-          </div>
-          <div class="col-md-12">
-            <p style="margin-top: 25px">*klik selesai jika semua barang yang dijual pada saat ini sudah masuk ke dalam tabel</p>
-          </div>
+          </form>
         </div>
         <!-- /.box-body -->
       </div>
@@ -231,8 +99,98 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <!-- url(nama route yang di web.php)-->
+      <form action="{{url('tambah_pelanggan')}}" method="post">
+        {{ csrf_field() }}
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Tambah Pelanggan Baru</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama :</label>
+            <!--input-->
+            <input type="text" class="form-control" style="width: 100%" name="nama" >
+          </div>
+          <!-- /.form-group -->
+          <div class="form-group">
+            <label>Kontak :</label>
+            <!--input-->
+            <input type="text" class="form-control" style="width: 100%" name="kontak" >
+          </div>
+          <!-- /.form group -->
+          <div class="form-group">
+            <label>Alamat :</label>
+            <!--input-->
+            <input type="text" class="form-control" style="width: 100%" name="alamat" >
+          </div>
+          <!-- /.form group -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+          <input type="submit" class="btn btn-primary" value="Simpan">
+        </div>
+      </div>
+      </form>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
   @include ('footer')
 </div>
 <!-- ./wrapper -->
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+
+<script type="text/javascript">
+  $('#pelanggan').change(function(e){
+    var pelanggan = $(this).val();
+    $.ajax({
+      url:'/autocomplete/'+pelanggan,
+      type:'GET',
+      timeout:30000,
+      success:function(e){
+        if (e.length==0) {
+          $('#kontak').val('');
+          $('#alamat').val('');
+        }else{
+          $('#kontak').val(e[0].kontak_pelanggan);
+          $('#alamat').val(e[0].alamat_pelanggan);
+        }
+      }
+    })
+  })
+</script>
 </body>
 </html>

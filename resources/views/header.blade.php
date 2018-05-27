@@ -62,24 +62,15 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="user-image" alt="User Image">
             <span class="hidden-xs">
-              @if (Auth::guard('pemilik')->check())
-                {{Auth::guard('pemilik')->user()->username}}
-              @elseif (Auth::guard('admin')->check())
-                 {{Auth::guard('admin')->user()->username}}
-              @endif
+              
             </span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
               <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="img-circle" alt="User Image">
-
               <p>
-                @if (Auth::guard('pemilik')->check())
-                {{Auth::guard('pemilik')->user()->username}}
-                @elseif (Auth::guard('admin')->check())
-                {{Auth::guard('admin')->user()->username}}
-                @endif
+                
               </p>
             </li>
             <!-- Menu Body -->

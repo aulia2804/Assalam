@@ -18,12 +18,12 @@ class BarangController extends Controller
     public function index()
     {
         $data = DB::table('barang')
-                    ->select('barang.id_barang','barang.nama_barang','barang.harga_beli',
-                    'barang.harga_jual','barang.stok','satuan.nama_satuan','pemasok.nama_pemasok')
-                    ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
-                    ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
-                    ->orderBy('id_barang')
-                    ->get();
+                ->select('barang.id_barang','barang.nama_barang','barang.harga_beli',
+                'barang.harga_jual','barang.stok','satuan.nama_satuan','pemasok.nama_pemasok')
+                ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+                ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
+                ->orderBy('id_barang')
+                ->get();
         $data2 = Satuan::all();
         return view('barang')
         ->with('data', $data)
