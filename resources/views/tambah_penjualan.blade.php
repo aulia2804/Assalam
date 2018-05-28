@@ -129,8 +129,11 @@
             </div>
             <!-- /.box -->
           </div>
+          <!-- / .col -->
         </div>
+        <!-- / .col -->
       </div>
+      <!-- / .row -->
       <div class="box box-default">
         <div class="box-header">
           <h3 class="box-title">Daftar Barang</h3>
@@ -157,12 +160,39 @@
                 <td>{{$details->jumlah_barang}}</td>
                 <td>{{$details->total_harga}}</td>
                 <td>
-                  <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                  <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#hapus{{$details->id_detail_penjualan}}">Hapus</button>
                 </td>
               </tr>
+              <div class="modal fade" id="hapus{{$details->id_detail_penjualan}}">
+                <div class="modal-dialog" style="witdh:400px">
+                  <div class="modal-content" >
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Peringatan</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- text input -->
+                      <p>Anda yakin ingin menghapus {{$details->nama_barang}}?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                      <form action="{{route('hapus_detail.destroy' , $details->id_detail_penjualan ) }}" method="POST">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
+                          <button class="btn btn-danger">Hapus</button>
+                      </form> 
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal --> 
               @endforeach
             </tbody>
-          </table>     
+          </table>    
+          
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
@@ -177,6 +207,8 @@
               </div>
             </div>
           </div>
+          <form action="{{url('dpjual')}}" method="POST">
+            {{ csrf_field() }}
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
@@ -189,19 +221,18 @@
               </div>
             </div>
           </div>
-        
           <div class="col-md-6">
             <a href="" class="btn btn-default" style="margin-top: 25px">Kembali</a>
           </div>
           <div class="col-md-6">
-            <a href="" class="btn btn-primary pull-right" style="margin-top: 25px">Selesai</a>
+            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Simpan">
           </div>
+          </form>
           <div class="col-md-12">
             <p style="margin-top: 25px">*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
           </div>
         </div>
         <!-- /.box-body -->
-        </div>
       </div>
       <!-- /.box -->
     </section>

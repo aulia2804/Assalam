@@ -28,8 +28,7 @@ class DePenController extends Controller
                 ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
                 ->orderBy('id_penjualan','DESC')
                 ->first();
-                $data_total = TransaksiPenjualan::orderBy('id_penjualan', 'DESC')->first();
-                // dd($data_total);
+        $data_total = TransaksiPenjualan::orderBy('id_penjualan', 'DESC')->first();
         $id = DB::table('transaksi_penjualan')
             ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.kontak_pelanggan','pelanggan.alamat_pelanggan')
             ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
@@ -116,9 +115,24 @@ class DePenController extends Controller
                 'updated_at' => Carbon::now()
             ]);
 
-            Alert::warning('Data sudah ditambah', 'Berhasil!');
+            Alert::success('Data sudah ditambah', 'Berhasil!');
             return redirect('tambah_penjualan');
         }
+    }
+
+    public function uangmuka(Request $request)
+    {
+        $id = DB::table('transaksi_penjualan')
+                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan')
+                ->orderBy('id_penjualan', 'DESC')
+                ->first();
+        DB::table('transaksi_penjualan')
+            ->where('id_penjualan', $id->id_penjualan)
+            ->update([
+            'uang_muka' => $request->uangmuka,
+            'updated_at' => Carbon::now()
+        ]);
+        return redirect('data_transaksi_penjualan');
     }
 
     public function show($id)
@@ -138,7 +152,33 @@ class DePenController extends Controller
 
     public function destroy($id)
     {
-        //
+        $dapat_id = DB::table('detail_penjualan')
+            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.total_bayar','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.id_barang','barang.nama_barang','barang.stok')
+            ->where('id_detail_penjualan',$id)
+            ->join('transaksi_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_penjualan')
+            ->join('barang','barang.id_barang','=','detail_penjualan.id_barang')
+            ->first();
+
+        $hasil = $dapat_id->total_bayar-$dapat_id->total_harga;
+        DB::table('transaksi_penjualan')
+            ->where('id_penjualan', $dapat_id->id_penjualan)
+            ->update([
+            'total_bayar' => $hasil,
+            'updated_at' => Carbon::now()
+        ]);
+        
+        $hasil2=$dapat_id->stok+$dapat_id->jumlah_barang;
+        DB::table('barang')
+            ->where('id_barang', $dapat_id->id_barang)
+            ->update([
+            'stok' => $hasil2,
+            'updated_at' => Carbon::now()
+        ]);
+
+        $hapus = DetailPenjualan::find($id);
+        $hapus->delete();
+        Alert::success('Data berhasil dihapus', 'Berhasil!');
+        return redirect('tambah_penjualan');
     }
 
     public function autocomplete($id)

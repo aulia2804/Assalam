@@ -16,13 +16,12 @@ class PembelianController extends Controller
     {
         $data = DB::table('transaksi_pembelian')
             ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian',
-            'transaksi_pembelian.tanggal_jatuh_tempo','barang.nama_barang','transaksi_pembelian.total_bayar',
-            'pemasok.nama_pemasok','pelunasan_hutang.status')
+            'transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar',
+            'pemasok.nama_pemasok')
             ->join('detail_pembelian','transaksi_pembelian.id_pembelian','=','detail_pembelian.id_pembelian')
             ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
             ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
-            ->join('pelunasan_hutang','transaksi_pembelian.id_pembelian','=','pelunasan_hutang.id_pembelian')
-            ->orderBy('id_pembelian')
+            ->orderBy('id_pembelian', 'ASC')
             ->get();
         return view('data_transaksi_pembelian')
         ->with('data', $data);

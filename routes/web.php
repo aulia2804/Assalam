@@ -48,13 +48,17 @@ Route::resource('transaksi_pembelian', 'TranPemController');
 Route::resource('tambah_barang', 'DePemController');
 Route::get('autocomplete/{id}', 'TranPemController@autocomplete');
 Route::post('tambah_pemasok', 'DePemController@tambahPemasok');
+Route::post('dpbeli', 'DePemController@uangmuka');
 
 Route::resource('data_transaksi_penjualan', 'PenjualanController');
 Route::resource('transaksi_penjualan', 'TranPenController');
 Route::get('autocomplete/{id}', 'TranPenController@autocomplete');
 Route::resource('tambah_penjualan', 'DePenController');
+Route::resource('hapus_detail', 'DePenController');
 Route::get('autocomplete/{id}', 'DePenController@autocomplete');
 Route::post('tambah_pelanggan', 'DePenController@tambahPelanggan');
+Route::post('dpjual', 'DePenController@uangmuka');
+
 
 Route::get('/table', function () {
     return view('table');

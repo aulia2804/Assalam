@@ -39,10 +39,9 @@
                   <tr>
                     <th style="text-align:center">ID</th>
                     <th style="text-align:center">Tanggal Penjualan</th>
-                    <th style="text-align:center">Barang</th>
                     <th style="text-align:center">Pelanggan</th>
                     <th style="text-align:center">Total</th>
-                    <th style="text-align:center">Status</th>
+                    <th style="text-align:center">Uang Muka</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -51,10 +50,9 @@
                 <tr>
                   <td>{{$datas->id_penjualan}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_penjualan"), "d F Y")}}</td>
-                  <td>{{$datas->nama_barang}}</td>
                   <td>{{$datas->nama_pelanggan}}</td>
                   <td>{{$datas->total_bayar}}</td>
-                  <td>{{$datas->status}}</td>
+                  <td>{{$datas->uang_muka}}</td>
                   <td>
                     <a href="#" class="btn btn-info btn-xs"></i>Detail</a>
                     <a href="{{URL::to('pelunasan_hutang')}}" class="btn btn-success btn-xs"></i>Hutang</a>

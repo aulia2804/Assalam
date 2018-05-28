@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TransaksiPembelian;
 use App\DetailPembelian;
 use Carbon\Carbon;
 use App\Barang;
@@ -23,8 +24,8 @@ class DePemController extends Controller
                 ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
                 ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
                 ->orderBy('id_pembelian','DESC')
-                ->limit(1)
-                ->get();
+                ->first();
+        $data_total = TransaksiPembelian::orderBy('id_pembelian', 'DESC')->first();
         $id = DB::table('transaksi_pembelian')
             ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
             ->orderBy('id_pembelian', 'DESC')
@@ -39,6 +40,7 @@ class DePemController extends Controller
         $data2 = Satuan::all();
         $data3 = Pemasok::all();
         return view('tambah_barang')
+        ->with('data_total', $data_total)
         ->with('detail', $detail)
         ->with('data', $data)
         ->with('data2', $data2)
@@ -106,6 +108,21 @@ class DePemController extends Controller
             Alert::success('Data sudah ditambah', 'Berhasil!');
             return redirect('tambah_barang');
         }
+    }
+
+    public function uangmuka(Request $request)
+    {
+        $id = DB::table('transaksi_pembelian')
+                ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
+                ->orderBy('id_pembelian', 'DESC')
+                ->first();
+        DB::table('transaksi_pembelian')
+            ->where('id_pembelian', $id->id_pembelian)
+            ->update([
+            'uang_muka' => $request->uangmuka,
+            'updated_at' => Carbon::now()
+        ]);
+        return redirect('data_transaksi_pembelian');
     }
 
     public function show($id)

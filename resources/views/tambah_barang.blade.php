@@ -165,14 +165,14 @@
                 </label>
               </div>
               <div class="col-md-2">
-                @foreach($data as $datas)
                 <label>
-                  {{$datas->total_bayar}}
+                  {{$data_total->total_bayar}}
                 </label>
-                @endforeach
               </div>
             </div>
           </div>
+          <form action="{{url('dpbeli')}}" method="POST">
+            {{ csrf_field() }}
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
@@ -190,8 +190,9 @@
             <a href="" class="btn btn-default" style="margin-top: 25px">Batalkan Pembelian</a>
           </div>
           <div class="col-md-6">
-            <a href="" class="btn btn-primary pull-right" style="margin-top: 25px">Selesai</a>
+            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Simpan">
           </div>
+          </form>
           <div class="col-md-12">
             <p style="margin-top: 25px">*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
             <p>*klik "Batalkan Pembelian" untuk membatalkan pembelian</p>

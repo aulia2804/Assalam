@@ -35,11 +35,9 @@
                   <tr>
                     <th style="text-align:center">ID</th>
                     <th style="text-align:center">Tanggal Pembelian</th>
-                    <th style="text-align:center">Tanggal Jatuh Tempo</th>
-                    <th style="text-align:center">Barang</th>
+                    <th style="text-align:center">Jatuh Tempo</th>
                     <th style="text-align:center">Pemasok</th>
                     <th style="text-align:center">Total</th>
-                    <th style="text-align:center">Status</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -49,10 +47,8 @@
                   <td>{{$datas->id_pembelian}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_pembelian"), "d F Y")}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_jatuh_tempo"), "d F Y")}}</td>
-                  <td>{{$datas->nama_barang}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
                   <td>{{$datas->total_bayar}}</td>
-                  <td>{{$datas->status}}</td>
                   <td>
                     <a href="" class="btn btn-info btn-xs"></i>Detail</a>
                     <a href="{{route('pelunasan_hutang.show', $datas->id_pembelian)}}" class="btn btn-success btn-xs"></i>Hutang</a>
