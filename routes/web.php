@@ -21,6 +21,8 @@ Route::get('/beranda', function () {
     return view('beranda');
 });
 
+Route::get('hapus_penjualan', 'DePenController@hapuspenjualan');
+
 Route::resource('pengguna', 'PenggunaController');
 Route::resource('tambah_pengguna', 'PenggunaController');
 Route::resource('detail_pengguna', 'PenggunaController');
@@ -58,6 +60,7 @@ Route::resource('hapus_detail', 'DePenController');
 Route::get('autocomplete/{id}', 'DePenController@autocomplete');
 Route::post('tambah_pelanggan', 'DePenController@tambahPelanggan');
 Route::post('dpjual', 'DePenController@uangmuka');
+
 
 
 Route::get('/table', function () {

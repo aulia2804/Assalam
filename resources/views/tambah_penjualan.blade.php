@@ -44,7 +44,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{$id->id_pelanggan}}</td>
+                      <td>{{$id->id_penjualan}}</td>
                       <td>{{date('d F Y', strtotime($id->tanggal_penjualan))}}</td>
                       <td>{{$id->cara_penjualan}}</td>
                       <td>
@@ -121,7 +121,7 @@
                 </div>
                 <!-- /.form-group -->
                 <div class="form-group" style="text-align: center;">
-                  <input type="submit" class="btn btn-success" style="margin-top: 25px" value="Tambah">
+                  <input type="submit" class="btn btn-success" style="margin-top: 25px" value="Tambah Barang">
                 </div>  
               </form>     
               </div>
@@ -221,15 +221,38 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <a href="" class="btn btn-default" style="margin-top: 25px">Kembali</a>
-          </div>
-          <div class="col-md-6">
-            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Simpan">
+          <div class="col-md-12">
+            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Selesai">
           </div>
           </form>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-danger" style="margin-top: 25px" data-toggle="modal" data-target="#delete">Batalkan Penjualan</button>
+          </div>
+          <div class="modal fade" id="delete">
+            <div class="modal-dialog" style="witdh:400px">
+              <div class="modal-content" >
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Peringatan</h4>
+                </div>
+                <div class="modal-body">
+                  <!-- text input -->
+                  <p>Anda yakin ingin membatalkan penjualan saat ini?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                  <a href="{{url('hapus_penjualan')}}" class="btn btn-danger">Hapus</a>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal --> 
           <div class="col-md-12">
-            <p style="margin-top: 25px">*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
+            <p style="margin-top: 25px">*PERINGATAN! membatalkan pembelian akan menghapus data pembelian saat ini</p>
+            <p>*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
           </div>
         </div>
         <!-- /.box-body -->
