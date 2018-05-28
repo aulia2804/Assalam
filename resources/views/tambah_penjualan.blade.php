@@ -37,7 +37,7 @@
                   <thead>
                   <tr>
                     <th style="text-align: center;">ID</th>
-                    <th style="text-align: center;">Tanggal Pembelian</th>
+                    <th style="text-align: center;">Tanggal Penjualan</th>
                     <th style="text-align: center;">Cara</th>
                     <th></th>
                   </tr>

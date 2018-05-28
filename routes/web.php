@@ -48,6 +48,7 @@ Route::resource('data_retur_pembelian', 'ReturController');
 Route::resource('pelunasan_hutang', 'HutangController');
 Route::resource('transaksi_pembelian', 'TranPemController');
 Route::resource('tambah_barang', 'DePemController');
+Route::resource('hapus', 'DePemController');
 Route::get('autocomplete/{id}', 'TranPemController@autocomplete');
 Route::post('tambah_pemasok', 'DePemController@tambahPemasok');
 Route::post('dpbeli', 'DePemController@uangmuka');

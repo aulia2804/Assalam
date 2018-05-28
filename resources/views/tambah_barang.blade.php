@@ -151,9 +151,35 @@
                 <td>{{$details->harga_beli}}</td>
                 <td>{{$details->total_harga}}</td>
                 <td>
-                  <a href="" class="btn btn-danger btn-xs">Hapus</a>
+                  <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del{{$details->id_detail_pembelian}}">Hapus</button>
                 </td>
               </tr>
+              <div class="modal fade" id="del{{$details->id_detail_pembelian}}">
+                <div class="modal-dialog" style="witdh:400px">
+                  <div class="modal-content" >
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Peringatan</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!-- text input -->
+                      <p>Anda yakin ingin menghapus {{$details->nama_barang}}?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                      <form action="{{route('hapus.destroy' , $details->id_detail_pembelian ) }}" method="POST">
+                          {{ csrf_field() }}
+                          {{ method_field('DELETE') }}
+                          <button class="btn btn-danger">Hapus</button>
+                      </form> 
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal --> 
               @endforeach
             </tbody>
           </table>     

@@ -142,6 +142,28 @@ class DePemController extends Controller
 
     public function destroy($id)
     {
-        //
+        $dapat_id = DB::table('detail_pembelian')
+            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.total_bayar','detail_pembelian.id_detail_pembelian','detail_pembelian.jumlah_barang','detail_pembelian.total_harga','barang.id_barang','barang.nama_barang','barang.stok')
+            ->where('id_detail_pembelian',$id)
+            ->join('transaksi_pembelian','transaksi_pembelian.id_pembelian','=','detail_pembelian.id_pembelian')
+            ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
+            ->first();
+
+        $hasil = $dapat_id->total_bayar-$dapat_id->total_harga;
+        DB::table('transaksi_pembelian')
+            ->where('id_pembelian', $dapat_id->id_pembelian)
+            ->update([
+                'total_bayar' => $hasil,
+                'updated_at' => Carbon::now()
+        ]);
+        
+        $hapus = DetailPembelian::find($id);
+        $hapus->delete();
+
+        $hapus2 = Barang::find($dapat_id->id_barang);
+        $hapus2->delete();
+
+        Alert::success('Data berhasil dihapus', 'Berhasil!');
+        return redirect('tambah_barang');
     }
 }
