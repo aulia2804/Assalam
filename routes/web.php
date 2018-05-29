@@ -22,6 +22,8 @@ Route::get('/beranda', function () {
 });
 
 Route::get('hapus_penjualan', 'DePenController@hapuspenjualan');
+Route::get('hapus_pembelian', 'DePemController@hapuspembelian');
+Route::get('hret', 'DeretController@hapusretur');
 
 Route::resource('pengguna', 'PenggunaController');
 Route::resource('tambah_pengguna', 'PenggunaController');
@@ -44,7 +46,6 @@ Route::resource('tambah_satuan', 'SatuanController');
 Route::resource('ubah_satuan', 'SatuanController');
 
 Route::resource('data_transaksi_pembelian', 'PembelianController');
-Route::resource('data_retur_pembelian', 'ReturController');
 Route::resource('pelunasan_hutang', 'HutangController');
 Route::resource('transaksi_pembelian', 'TranPemController');
 Route::resource('tambah_barang', 'DePemController');
@@ -52,6 +53,12 @@ Route::resource('hapus', 'DePemController');
 Route::get('autocomplete/{id}', 'TranPemController@autocomplete');
 Route::post('tambah_pemasok', 'DePemController@tambahPemasok');
 Route::post('dpbeli', 'DePemController@uangmuka');
+
+Route::resource('retur_pembelian', 'TranRetController');
+Route::get('autocomplete/{id}', 'TranRetController@autocomplete');
+Route::resource('data_retur_pembelian', 'ReturController');
+Route::resource('tambah_retur', 'DeretController');
+Route::resource('hapus_retur', 'DeretController');
 
 Route::resource('data_transaksi_penjualan', 'PenjualanController');
 Route::resource('transaksi_penjualan', 'TranPenController');
@@ -62,16 +69,8 @@ Route::get('autocomplete/{id}', 'DePenController@autocomplete');
 Route::post('tambah_pelanggan', 'DePenController@tambahPelanggan');
 Route::post('dpjual', 'DePenController@uangmuka');
 
-
-
 Route::get('/table', function () {
     return view('table');
 });
 
-Route::get('/retur_pembelian', function () {
-    return view('retur_pembelian');
-});
 
-Route::get('/data_retur_pembelian', function () {
-    return view('data_retur_pembelian');
-});

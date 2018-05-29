@@ -13,7 +13,6 @@
     <section class="content-header">
       <h1>
         Pelanggan
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>

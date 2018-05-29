@@ -3,24 +3,19 @@
   @include ('head')
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
   @include ('header')
-
   <!-- Left side column. contains the logo and sidebar -->
   @include ('sidebar')
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Barang
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Barang</a></li>
-        <li class="active">Barang</li>
+        <li><i class="fa fa-cube"> Barang</i></li>
+        <li>Barang</li>
       </ol>
     </section>
 

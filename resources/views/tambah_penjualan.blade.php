@@ -13,12 +13,10 @@
     <section class="content-header">
       <h1>
         Transaksi Penjualan
-        <small>Preview</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Penjualan</a></li>
-        <li class="active">Transaksi Penjualan</li>
+        <li><i class="fa fa-plus">Penjualan</i></li>
+        <li>Transaksi Penjualan</li>
       </ol>
     </section>
 

@@ -166,4 +166,40 @@ class DePemController extends Controller
         Alert::success('Data berhasil dihapus', 'Berhasil!');
         return redirect('tambah_barang');
     }
+
+    public function hapuspembelian()
+    {
+        $cek = DB::table('transaksi_pembelian')
+            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar','transaksi_pembelian.uang_muka')
+            ->orderBy('id_pembelian','DESC')
+            ->first();
+        $cek2 = DB::table('detail_pembelian')
+            ->select('detail_pembelian.id_detail_pembelian','detail_pembelian.jumlah_barang','detail_pembelian.total_harga','barang.id_barang','barang.nama_barang','barang.harga_jual','barang.stok','barang.harga_beli','satuan.id_satuan','satuan.nama_satuan')
+            ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
+            ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
+            ->where('id_pembelian','=',$cek->id_pembelian)
+            ->orderBy('id_detail_pembelian','ASC')
+            ->get();
+        $cari2 = DetailPembelian::where('id_pembelian', $cek->id_pembelian)->get();
+        $jumlah2 = $cari2->count();
+       
+        $i=0;
+        $id_barang = array();
+        foreach ($cek2 as $car) {
+            $id = Barang::select('id_barang')->where('id_barang', $car->id_barang)->first();
+            $id_barang[$i] = $id->id_barang;
+            $i++;
+        }
+       
+        $hapus2 = TransaksiPembelian::find($cek->id_pembelian);
+        $hapus2->delete();
+
+        foreach ($id_barang as $barang ) {
+            $hapus = Barang::find($barang);
+            $hapus->delete();
+        }
+
+        Alert::success('Pembelian berhasil dibatalkan', 'Berhasil!');
+        return redirect('transaksi_pembelian');
+    }
 }

@@ -13,12 +13,11 @@
     <section class="content-header">
       <h1>
         Pengguna
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> Home</li>
         <li>Master</li>
-        <li class="active">Pengguna</li>
+        <li>Pengguna</li>
       </ol>
     </section>
     <!-- Main content -->

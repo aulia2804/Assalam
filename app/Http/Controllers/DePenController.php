@@ -12,7 +12,6 @@ use App\Barang;
 use Response;
 use Alert;
 use App\TransaksiPenjualan;
-
 use DB;
 
 class DePenController extends Controller

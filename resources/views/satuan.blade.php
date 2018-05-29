@@ -13,11 +13,9 @@
     <section class="content-header">
       <h1>
         Satuan
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Barang</a></li>
+        <li><i class="fa fa-cube"> Barang</i></li>
         <li class="active">Satuan</li>
       </ol>
     </section>
