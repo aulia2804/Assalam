@@ -18,6 +18,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+                      
             <li><a href="{{URL::to('/pengguna')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li>
             <li><a href="{{URL::to('/pelanggan')}}"><i class="fa fa-circle-o"></i> Pelanggan</a></li>
             <li><a href="{{URL::to('/pemasok')}}"><i class="fa fa-circle-o"></i> Pemasok</a></li>
@@ -46,7 +47,7 @@
           <ul class="treeview-menu">
             <li><a href="{{URL::to('/transaksi_pembelian')}}"><i class="fa fa-circle-o"></i> Transaksi Pembelian</a></li>
             <li><a href="{{URL::to('/data_transaksi_pembelian')}}"><i class="fa fa-circle-o"></i> Data Transaksi Pembelian</a></li>
-            <li><a href="{{URL::to('retur_pembelian')}}"><i class="fa fa-circle-o"></i> Retur Pembelian</a></li>
+            <li><a href="{{URL::to('/retur_pembelian')}}"><i class="fa fa-circle-o"></i> Retur Pembelian</a></li>
             <li><a href="{{URL::to('/data_retur_pembelian')}}"><i class="fa fa-circle-o"></i> Data Retur Pembelian</a></li>
           </ul>
         </li>

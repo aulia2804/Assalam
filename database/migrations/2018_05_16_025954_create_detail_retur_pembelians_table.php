@@ -20,10 +20,12 @@ class CreateDetailReturPembeliansTable extends Migration
             $table->integer('jumlah_barang');
             $table->integer('total_harga');
             $table->string('deskripsi_retur',200);
+            $table->enum('proses',['Proses','Selesai'])->default('Proses');
+            $table->enum('status_deret',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_retur_pembelian')->references('id_retur_pembelian')->on('retur_pembelian');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
+            $table->foreign('id_retur_pembelian')->references('id_retur_pembelian')->on('retur_pembelian')->onDelete('cascade');
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->onDelete('cascade');
         });
     }
 

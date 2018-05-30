@@ -18,6 +18,7 @@ class CreatePelanggansTable extends Migration
             $table->string('nama_pelanggan',100);
             $table->bigInteger('kontak_pelanggan');
             $table->string('alamat_pelanggan',200);
+            $table->enum('status_pelanggan',['Publish','Draft'])->default('Publish');
             $table->timestamps();
         });
     }

@@ -21,10 +21,11 @@ class CreateBarangsTable extends Migration
             $table->integer('harga_beli');
             $table->integer('harga_jual');
             $table->integer('stok');
+            $table->enum('status_barang',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_satuan')->references('id_satuan')->on('satuan');
-            $table->foreign('id_pemasok')->references('id_pemasok')->on('pemasok');
+            $table->foreign('id_satuan')->references('id_satuan')->on('satuan')->onDelete('cascade');
+            $table->foreign('id_pemasok')->references('id_pemasok')->on('pemasok')->onDelete('cascade');
         });
     }
 

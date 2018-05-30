@@ -17,9 +17,10 @@ class CreateReturPembeliansTable extends Migration
             $table->increments('id_retur_pembelian');
             $table->integer('id_pembelian')->unsigned();
             $table->date('tanggal_retur');
+            $table->enum('status_retur',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian');
+            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian')->onDelete('cascade');
         });
     }
 

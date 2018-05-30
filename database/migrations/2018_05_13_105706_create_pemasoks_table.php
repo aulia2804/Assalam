@@ -18,6 +18,7 @@ class CreatePemasoksTable extends Migration
             $table->string('nama_pemasok',100);
             $table->bigInteger('kontak_pemasok');
             $table->string('alamat_pemasok',200);
+            $table->enum('status_pemasok',['Publish','Draft'])->default('Publish');
             $table->timestamps();
         });
     }

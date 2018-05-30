@@ -48,6 +48,7 @@
                 <tbody>
                 @foreach($data as $datas)
                 <tr>
+                  @if($datas->status_pengguna=='Publish')
                   <td>{{$datas->id_pengguna}}</td>
                   <td>{{$datas->nama_pengguna}}</td>
                   <td>{{$datas->kontak_pengguna}}</td>
@@ -61,10 +62,17 @@
                     @endif
                   </td>
                   <td>
-                    <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#default{{$datas->id_pengguna}}">Detail</button>
-                    <a href="{{route('ubah_pengguna.edit', $datas->id_pengguna)}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 
-                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#hapus{{$datas->id_pengguna}}"><i class="fa fa-trash"></i></button>
+                    @if($datas->rule=='Pemilik')
+                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#default{{$datas->id_pengguna}}">Detail</button>
+                      <a href="{{route('ubah_pengguna.edit', $datas->id_pengguna)}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 
+                    @else
+                      <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#default{{$datas->id_pengguna}}">Detail</button>
+                      <a href="{{route('ubah_pengguna.edit', $datas->id_pengguna)}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 
+                      <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#hapus{{$datas->id_pengguna}}"><i class="fa fa-trash"></i></button>
+                    @endif
                   </td>
+                  @else
+                  @endif
                 </tr>
 
                 <div class="modal fade" id="default{{$datas->id_pengguna}}">
@@ -202,7 +210,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-                        <form action="{{route('pengguna.destroy' , $datas->id_pengguna ) }}" method="POST">
+                        <form action="{{route('hapus_pengguna.destroy' , $datas->id_pengguna ) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button class="btn btn-danger">Hapus</button>

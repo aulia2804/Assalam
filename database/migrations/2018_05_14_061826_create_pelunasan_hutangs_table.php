@@ -20,9 +20,10 @@ class CreatePelunasanHutangsTable extends Migration
             $table->integer('bayar_hutang');
             $table->integer('sisa_hutang');
             $table->string('status',15);
+            $table->enum('status_hutang',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian');
+            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian')->onDelete('cascade');
         });
     }
 

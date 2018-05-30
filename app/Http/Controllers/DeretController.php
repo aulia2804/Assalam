@@ -28,7 +28,7 @@ class DeretController extends Controller
                     ->orderBy('id_detail_pembelian','ASC')
                     ->get();
         $detail = DB::table('detail_retur_pembelian')
-                ->select('detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.total_harga','detail_retur_pembelian.deskripsi_retur','barang.id_barang','barang.nama_barang','barang.harga_beli')
+                ->select('detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.total_harga','detail_retur_pembelian.deskripsi_retur','detail_retur_pembelian.proses','barang.id_barang','barang.nama_barang','barang.harga_beli')
                 ->where('id_retur_pembelian',$dapat_id->id_retur_pembelian)
                 ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
                 ->orderBy('id_detail_retur','ASC')

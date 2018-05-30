@@ -23,6 +23,7 @@ class CreatePenggunasTable extends Migration
             $table->string('password');
             $table->enum('rule',['Admin','Pemilik']);
             $table->enum('status',['Active','Non Active'])->default('Non Active');
+            $table->enum('status_pengguna',['Publish','Draft'])->default('Publish');
             $table->timestamps();
         });
     }

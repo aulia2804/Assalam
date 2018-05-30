@@ -21,9 +21,10 @@ class CreateTransaksiPembeliansTable extends Migration
             $table->date('tanggal_jatuh_tempo');
             $table->integer('total_bayar');
             $table->integer('uang_muka');
+            $table->enum('status_pembelian',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_pengguna')->references('id_pengguna')->on('pengguna');
+            $table->foreign('id_pengguna')->references('id_pengguna')->on('pengguna')->onDelete('cascade');
         });
     }
 

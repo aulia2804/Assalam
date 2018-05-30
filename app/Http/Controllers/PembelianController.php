@@ -21,7 +21,7 @@ class PembelianController extends Controller
             ->join('detail_pembelian','transaksi_pembelian.id_pembelian','=','detail_pembelian.id_pembelian')
             ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
             ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
-            ->orderBy('id_pembelian', 'ASC')
+            ->groupBy('transaksi_pembelian.id_pembelian')
             ->get();
         return view('data_transaksi_pembelian')
         ->with('data', $data);

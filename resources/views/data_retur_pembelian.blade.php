@@ -8,6 +8,7 @@
   @include ('sidebar')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    @include('sweet::alert')
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -37,6 +38,7 @@
                     <th style="text-align:center">Barang</th>
                     <th style="text-align:center">Pemasok</th>
                     <th style="text-align:center">Jumlah Barang</th>
+                    <th style="text-align:center">Deskripsi Retur</th>
                     <th style="text-align:center">Keterangan</th>
                     <th></th>
                   </tr>
@@ -44,12 +46,19 @@
                 <tbody>
                 @foreach($data as $datas)
                 <tr>
-                  <td>{{$datas->id_retur_pembelian}}</td>
+                  <td>{{$datas->id_detail_retur}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_retur"), "d F Y")}}</td>
                   <td>{{$datas->nama_barang}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
                   <td>{{$datas->jumlah_barang}}</td>
                   <td>{{$datas->deskripsi_retur}}</td>
+                  <td>
+                    @if($datas->proses=='Proses')
+                      <a href="{{url('proses', $datas->id_detail_retur)}}" class="btn btn-warning btn-xs"></i>Proses</a>
+                    @else
+                      <a href="" class="btn btn-success btn-xs">Selesai</a>
+                    @endif
+                  </td>
                   <td>
                     <a href="#" class="btn btn-info btn-xs"></i>Detail</a>
                     <a href="#" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 

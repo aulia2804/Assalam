@@ -19,10 +19,11 @@ class CreateDetailPembeliansTable extends Migration
             $table->integer('id_barang')->unsigned();
             $table->integer('jumlah_barang');
             $table->integer('total_harga');
+            $table->enum('status_depem',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
+            $table->foreign('id_pembelian')->references('id_pembelian')->on('transaksi_pembelian')->onDelete('cascade');
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->onDelete('cascade');
         });
     }
 

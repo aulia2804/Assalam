@@ -19,10 +19,11 @@ class CreateDetailPenjualansTable extends Migration
             $table->integer('id_barang')->unsigned();
             $table->integer('jumlah_barang');
             $table->integer('total_harga');
+            $table->enum('status_depen',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 
-            $table->foreign('id_penjualan')->references('id_penjualan')->on('transaksi_penjualan');
-            $table->foreign('id_barang')->references('id_barang')->on('barang');
+            $table->foreign('id_penjualan')->references('id_penjualan')->on('transaksi_penjualan')->onDelete('cascade');
+            $table->foreign('id_barang')->references('id_barang')->on('barang')->onDelete('cascade');
         });
     }
 

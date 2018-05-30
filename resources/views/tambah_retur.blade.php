@@ -191,9 +191,8 @@
             </tbody>
           </table>    
           <div class="col-md-12">
-            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Selesai">
+            <a href="{{URL::to('/retur_pembelian')}}" class="btn btn-primary pull-right" style="margin-top: 25px">Selesai</a>
           </div>
-          </form>
           <div class="col-md-6">
             <button type="button" class="btn btn-danger" style="margin-top: 25px" data-toggle="modal" data-target="#delete">Batalkan Retur</button>
           </div>

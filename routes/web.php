@@ -29,6 +29,7 @@ Route::resource('pengguna', 'PenggunaController');
 Route::resource('tambah_pengguna', 'PenggunaController');
 Route::resource('detail_pengguna', 'PenggunaController');
 Route::resource('ubah_pengguna', 'PenggunaController');
+Route::resource('hapus_pengguna', 'PenggunaController');
 Route::get('active/{id}', 'PenggunaController@active');
 Route::get('nonactive/{id}', 'PenggunaController@nonactive');
 
@@ -57,6 +58,7 @@ Route::post('dpbeli', 'DePemController@uangmuka');
 Route::resource('retur_pembelian', 'TranRetController');
 Route::get('autocomplete/{id}', 'TranRetController@autocomplete');
 Route::resource('data_retur_pembelian', 'ReturController');
+Route::get('proses/{id}', 'ReturController@proses');
 Route::resource('tambah_retur', 'DeretController');
 Route::resource('hapus_retur', 'DeretController');
 

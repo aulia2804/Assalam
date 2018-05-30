@@ -6,16 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use App\Pengguna;
+use Carbon\Carbon;
 use Alert;
 use DB;
 
 class PenggunaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $data = Pengguna::all();
@@ -23,22 +20,11 @@ class PenggunaController extends Controller
         ->with('data', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('tambah_pengguna');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $message='*nama pengguna yang dimasukkan sudah ada';
@@ -63,12 +49,6 @@ class PenggunaController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $data = Pengguna::where('id_pengguna', $id)->get();
@@ -77,12 +57,6 @@ class PenggunaController extends Controller
         
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data = Pengguna::where('id_pengguna', $id)->get();
@@ -90,13 +64,6 @@ class PenggunaController extends Controller
             ->with('data', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     //masukin data ke db
     public function update(Request $request, $id)
     {
@@ -115,29 +82,37 @@ class PenggunaController extends Controller
 
     public function destroy($id)
     {
-        $data = Pengguna::find($id);
-        $data->delete();
-        Alert::success('Data berhasil dihapus', 'Berhasil!');
+        DB::table('pengguna')
+            ->where('id_pengguna',$id)
+            ->update([
+                'status_pengguna' => 'Draft',
+                'updated_at' => Carbon::now()
+            ]);
+
+        Alert::success('Pengguna telah dihapus','Berhasil!');
         return redirect('pengguna');
     }
 
-    public function active($id){
+    public function active($id)
+    {
 		DB::table('pengguna')
 				->where('id_pengguna', $id)
 	            ->update([
-				'status' => 'Non Active'
+				'status' => 'Non Active',
+                'updated_at' => Carbon::now()
 			]);
 		return redirect('pengguna');
 	}
 
-    public function nonactive($id){
+    public function nonactive($id)
+    {
         DB::table('pengguna')
                 ->where('id_pengguna', $id)
                 ->update([
-                'status' => 'Active'
+                'status' => 'Active',
+                'updated_at' => Carbon::now()
             ]);
         return redirect('pengguna');
     }
 	
-
 }

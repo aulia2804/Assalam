@@ -16,6 +16,7 @@ class CreateSatuansTable extends Migration
         Schema::create('satuan', function (Blueprint $table) {
             $table->increments('id_satuan');
             $table->string('nama_satuan',10);
+            $table->enum('status_satuan',['Publish','Draft'])->default('Publish');
             $table->timestamps();
         });
     }
