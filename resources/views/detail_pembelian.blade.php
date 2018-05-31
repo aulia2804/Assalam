@@ -12,18 +12,18 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Transaksi Pembelian
+        Detail Transaksi Pembelian
       </h1>
       <ol class="breadcrumb">
         <li><i class="fa fa-plus"> Pembelian</i></li>
-        <li>Transaksi Pembelian</li>
+        <li>Data Transaksi Pembelian</li>
+        <li>Detail Transaksi Pembelian</li>
       </ol>
     </section>
     <section class="content">
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3"></div>
             <div class="col-md-6">
               <div class="box box-default">
                 <div class="box-header with-border">
@@ -31,34 +31,57 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="background-color: #d2d6de">
-                  <form action="{{route('pelunasan_hutang.store')}}" method="post">
-                    {{ csrf_field() }}
-                  <div class="row" style="padding: 20px">
-                    <!-- Date -->
-                    <div class="form-group">
-                      <label>Tanggal Pelunasan :</label>
-                      <!--input-->
-                      <div class="input-group date" style="width: 250px">
-                        <div class="input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="text" class="form-control pull-right" id="datepicker" name="pelunasan" >
-                      </div>
-                      <!-- /.input group -->
-                    </div>
-                    <!-- /.form group -->
-                    <div class="form-group">
-                      <label>Jumlah Uang :</label>
-                      <!--input-->
-                      <input type="text" class="form-control" name="uang" style="width: 250px">
-                    </div>
-                    <!-- /.form group -->
-                    <div class="form-group" style="text-align: center; padding-top: 20px" >
-                      <input type="submit" class="btn btn-success" value="Simpan">
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                  </form>  
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th style="text-align: center;">ID</th>
+                      <th style="text-align: center;">Tanggal Pembelian</th>
+                      <th style="text-align: center;">Tanggal Jatuh Tempo</th>
+                      <th style="text-align: center;">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($data1 as $dat)
+                      <tr>
+                        <td>{{$dat->id_pembelian}}</td>
+                        <td>{{date_format(date_create("$dat->tanggal_pembelian"), "d F Y")}}</td>
+                        <td>{{date_format(date_create("$dat->tanggal_jatuh_tempo"), "d F Y")}}</td>
+                        <td>{{$dat->total_bayar}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>  
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- / .col -->
+            <div class="col-md-6">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Pemasok</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="background-color: #d2d6de">
+                  <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th style="text-align: center;">Nama</th>
+                      <th style="text-align: center;">Kontak</th>
+                      <th style="text-align: center;">Alamat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($data2 as $datt)
+                      <tr>
+                        <td>{{$datt->nama_pemasok}}</td>
+                        <td>{{$datt->kontak_pemasok}}</td>
+                        <td>{{$datt->alamat_pemasok}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>  
                 </div>
                 <!-- /.box-body -->
               </div>
@@ -72,7 +95,7 @@
         <div class="col-md-12">
           <div class="box box-default">
             <div class="box-header with-border">
-              <h3 class="box-title">Riwayat Pelunasan Hutang</h3>
+              <h3 class="box-title">Detail Barang</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="background-color: #d2d6de">
@@ -80,24 +103,22 @@
                 <thead>
                 <tr>
                   <th style="text-align: center;">ID</th>
-                  <th style="text-align: center;">Tanggal Pelunasan</th>
-                  <th style="text-align: center;">Jumlah Uang</th>
-                  <th style="text-align: center;">Sisa Hutang</th>
-                  <th style="text-align: center;">Status Hutang</th>
-                  <th style="text-align: center;"></th>
+                  <th style="text-align: center;">Nama Barang</th>
+                  <th style="text-align: center;">Satuan</th>
+                  <th style="text-align: center;">Harga Beli</th>
+                  <th style="text-align: center;">Jumlah</th>
+                  <th style="text-align: center;">Sub Total</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach($data as $dapat)
+                  @foreach($data3 as $dattt)
                   <tr>
-                    <td>{{$dapat->id_pelunasan_hutang}}</td>
-                    <td>{{date_format(date_create("$dapat->tanggal_pelunasan_hutang"), "d F Y")}}</td>
-                    <td>{{$dapat->bayar_hutang}}</td>
-                    <td>{{$dapat->sisa_hutang}}</td>
-                    <td>{{$dapat->status}}</td>
-                    <td>
-                      <button class="btn btn-danger btn-xs">Hapus</button>
-                    </td>
+                    <td>{{$dattt->id_detail_pembelian}}</td>
+                    <td>{{$dattt->nama_barang}}</td>
+                    <td>{{$dattt->nama_satuan}}</td>
+                    <td>{{$dattt->harga_beli}}</td>
+                    <td>{{$dattt->jumlah_barang}}</td>
+                    <td>{{$dattt->total_harga}}</td>
                   </tr>
                   @endforeach
                 </tbody>

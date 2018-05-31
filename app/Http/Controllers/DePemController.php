@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\TransaksiPembelian;
 use App\DetailPembelian;
+use App\PelunasanHutang;
 use Carbon\Carbon;
 use App\Barang;
 use App\Pemasok;
@@ -63,13 +64,101 @@ class DePemController extends Controller
         return redirect('tambah_barang');
     }
 
+    public function tambahSatuan(Request $request){
+        $satuan = new Satuan();
+        $satuan->nama_satuan = $request->nama;
+        $satuan->save();
+        Alert::success('Satuan baru berhasil ditambah', 'Berhasil!');
+        return redirect('tambah_barang');
+    }
+
     public function store(Request $request)
     {
         $lihat = Barang::where('nama_barang', $request->barang)
         ->count();
+        $lihat_pemasok = Barang::where('nama_barang',$request->barang)->first();
         if($lihat>0){ 
-            Alert::warning('Data sudah tersedia', 'Kesalahan!');
-            return redirect('tambah_barang');
+            if($lihat_pemasok->id_pemasok==$request->pemasok){
+                $satuan = Barang::where('nama_barang',$request->barang)->where('id_satuan',$request->satuan)->where('harga_beli',$request->beli)->first(); //+stok
+                $satuan2 = Barang::where('nama_barang',$request->barang)->where('Id_satuan',$request->satuan)->get(); //ins
+                $satuan3 = Barang::where('nama_barang',$request->barang)->where('harga_beli',$request->beli)->get(); //ins
+                    if (count($satuan)>0) {
+
+                        $stok = Barang::find($satuan->id_barang);
+                        $stok->stok = $satuan->stok+$request->jumlah;
+                        $stok->updated_at = Carbon::now();
+                        $stok->save();
+
+                        $total = $request->beli*$request->jumlah;
+                        $id = DB::table('transaksi_pembelian')
+                            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
+                            ->orderBy('id_pembelian', 'DESC')
+                            ->first();
+
+                        $data2 = new DetailPembelian();
+                        $data2->id_pembelian = $id->id_pembelian;
+                        $data2->id_barang = $satuan->id_barang;
+                        $data2->jumlah_barang = $request->jumlah;
+                        $data2->total_harga = $total;
+                        $data2->save();
+
+                        $q = DB::table('detail_pembelian')
+                            ->where('id_pembelian', $id->id_pembelian)
+                            ->sum('total_harga');
+
+                        DB::table('transaksi_pembelian')
+                            ->where('id_pembelian', $id->id_pembelian)
+                            ->update([
+                            'total_bayar' => $q,
+                            'updated_at' => Carbon::now()
+                        ]);
+
+                        Alert::success('Barang berhasil ditambah', 'Berhasil!');
+                        return redirect('tambah_barang');
+
+                    }elseif (count($satuan2)>0 || count($satuan3)>0) {
+                        $data = new Barang();
+                        $data->nama_barang = $request->barang;
+                        $data->stok = $request->jumlah;
+                        $data->harga_beli = $request->beli;
+                        $data->harga_jual = $request->jual;
+                        $data->id_pemasok = $request->pemasok;
+                        $data->id_satuan = $request->satuan;
+                        $data->save();
+
+                        $id_barang = $data->id_barang;
+                        $total = $request->beli*$request->jumlah;
+                        $id = DB::table('transaksi_pembelian')
+                            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
+                            ->orderBy('id_pembelian', 'DESC')
+                            ->first();
+
+                        $data2 = new DetailPembelian();
+                        $data2->id_pembelian = $id->id_pembelian;
+                        $data2->id_barang = $id_barang;
+                        $data2->jumlah_barang = $request->jumlah;
+                        $data2->total_harga = $total;
+                        $data2->save();
+
+                        $q = DB::table('detail_pembelian')
+                            ->where('id_pembelian', $id->id_pembelian)
+                            ->sum('total_harga');
+
+                        DB::table('transaksi_pembelian')
+                            ->where('id_pembelian', $id->id_pembelian)
+                            ->update([
+                            'total_bayar' => $q,
+                            'updated_at' => Carbon::now()
+                        ]);
+
+                        Alert::success('Barang berhasil ditambah', 'Berhasil!');
+                        return redirect('tambah_barang');
+                    }
+            }else{
+                Alert::warning('Pemasok tidak boleh berbeda', 'Kesalahan!');
+                return redirect('tambah_barang');
+            }
+            
         }else{
             $data = new Barang();
             $data->nama_barang = $request->barang;
@@ -105,7 +194,7 @@ class DePemController extends Controller
                 'updated_at' => Carbon::now()
             ]);
 
-            Alert::success('Data sudah ditambah', 'Berhasil!');
+            Alert::success('Barang berhasil ditambah', 'Berhasil!');
             return redirect('tambah_barang');
         }
     }
@@ -113,7 +202,7 @@ class DePemController extends Controller
     public function uangmuka(Request $request)
     {
         $id = DB::table('transaksi_pembelian')
-                ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
+                ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar')
                 ->orderBy('id_pembelian', 'DESC')
                 ->first();
         DB::table('transaksi_pembelian')
@@ -122,6 +211,22 @@ class DePemController extends Controller
             'uang_muka' => $request->uangmuka,
             'updated_at' => Carbon::now()
         ]);
+
+        $sisa = $id->total_bayar-$request->uangmuka;
+
+        $pelunasan = new PelunasanHutang();
+        $pelunasan->id_pembelian = $id->id_pembelian;
+        $pelunasan->tanggal_pelunasan_hutang = $id->tanggal_pembelian;
+        $pelunasan->bayar_hutang = $request->uangmuka;
+        $pelunasan->sisa_hutang = $sisa;
+        if($sisa!=0){
+            $pelunasan->status = 'Belum Lunas';
+        }else{
+            $pelunasan->status = 'Lunas';
+        }
+        $pelunasan->status_hutang = 'Publish';
+        $pelunasan->save();
+
         return redirect('data_transaksi_pembelian');
     }
 

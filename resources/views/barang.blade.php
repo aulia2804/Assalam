@@ -8,6 +8,7 @@
   @include ('sidebar')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+     @include('sweet::alert')
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -18,8 +19,6 @@
         <li>Barang</li>
       </ol>
     </section>
-
-    <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
@@ -39,7 +38,9 @@
                     <th style="text-align:center">Stok</th>
                     <th style="text-align:center">Satuan</th>
                     <th style="text-align:center">Pemasok</th>
-                    <th></th>
+                    <th style="text-align: center;">
+                      <a href="{{URL::to('transaksi_pembelian')}}" class="btn btn-warning btn-xs"><i class="">Restock</i></a>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,9 +53,8 @@
                   <td>{{$datas->stok}}</td>
                   <td>{{$datas->nama_satuan}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
-                  <td>
+                  <td style="text-align: center;">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_barang}}"><i class="fa fa-pencil"></i></button>
-                    <a href="{{URL::to('form_restock')}}" class="btn btn-warning btn-xs"><i class="">Restock</i></a>
                     <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>

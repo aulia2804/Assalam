@@ -67,17 +67,6 @@
                 <form action="{{route('tambah_barang.store')}}" method="post">
                   {{ csrf_field() }}
                 <div class="form-group">
-                  <label style="width: 100%;">Pemasok :</label>
-                  <select class="form-control select2" style="width:75%;" name="pemasok">
-                    <option value="">Pilih Pemasok</option>
-                    @foreach($data3 as $datas)
-                    <option value="{{$datas->id_pemasok}}">{{$datas->nama_pemasok}}</option>
-                    @endforeach
-                  </select>
-                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus"></i></button>
-                </div>
-                <!-- /.form-group -->
-                <div class="form-group">
                   <label>Nama Barang :</label>
                   <!--input-->
                   <input type="text" class="form-control" style="width: 75%;" name="barang" >
@@ -109,7 +98,20 @@
                     <option value="{{$datan->id_satuan}}">{{$datan->nama_satuan}}</option>
                     @endforeach
                   </select>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-satuan"><i class="fa fa-plus"></i></button>
                 </div>
+                <!-- /.form group -->
+                <div class="form-group">
+                  <label style="width: 100%;">Pemasok :</label>
+                  <select class="form-control select2" style="width:75%;" name="pemasok">
+                    <option value="">Pilih Pemasok</option>
+                    @foreach($data3 as $datas)
+                    <option value="{{$datas->id_pemasok}}">{{$datas->nama_pemasok}}</option>
+                    @endforeach
+                  </select>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- /.form-group -->
                 <div style="text-align: center;">
                   <input type="submit" class="btn btn-success" style="margin-top: 25px" value="Beli Barang">
                 </div> 
@@ -279,6 +281,35 @@
             <input type="text" class="form-control" style="width: 100%" name="alamat" >
           </div>
           <!-- /.form group -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+          <input type="submit" class="btn btn-primary" value="Simpan">
+        </div>
+      </div>
+      </form>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal --> 
+  <div class="modal fade" id="modal-satuan">
+    <div class="modal-dialog">
+      <form action="{{url('tambah_satu')}}" method="post">
+        {{ csrf_field() }}
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Tambah Satuan Baru</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama :</label>
+            <!--input-->
+            <input type="text" class="form-control" style="width: 100%" name="nama" >
+          </div>
+          <!-- /.form-group -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>

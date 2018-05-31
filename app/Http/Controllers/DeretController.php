@@ -25,6 +25,14 @@ class DeretController extends Controller
                     ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
                     ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
                     ->where('transaksi_pembelian.id_pembelian', $dapat_id->id_pembelian)
+                    ->groupBy('id_pemasok')
+                    ->get();
+        $dapat_barang = DB::table('transaksi_pembelian')
+                    ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar','transaksi_pembelian.uang_muka','detail_pembelian.id_detail_pembelian','barang.id_barang','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+                    ->join('detail_pembelian','transaksi_pembelian.id_pembelian','=','detail_pembelian.id_pembelian')
+                    ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
+                    ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+                    ->where('transaksi_pembelian.id_pembelian', $dapat_id->id_pembelian)
                     ->orderBy('id_detail_pembelian','ASC')
                     ->get();
         $detail = DB::table('detail_retur_pembelian')
@@ -33,10 +41,7 @@ class DeretController extends Controller
                 ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
                 ->orderBy('id_detail_retur','ASC')
                 ->get();
-        return view('tambah_retur')
-        ->with('detail',$detail)
-        ->with('dapat_id',$dapat_id)
-        ->with('dapat_pemasok',$dapat_pemasok);
+        return view('tambah_retur',compact('dapat_id','dapat_pemasok','dapat_barang','detail'));
     }
 
     public function create()

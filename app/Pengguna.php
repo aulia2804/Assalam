@@ -11,5 +11,7 @@ class Pengguna extends Model implements AuthenticatableContract
 	use Authenticatable;
     protected $table = 'pengguna';
     protected $primaryKey = 'id_pengguna';
+
+    protected $guard = 'pengguna';
     
 }

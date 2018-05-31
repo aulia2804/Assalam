@@ -47,8 +47,8 @@
                   <td>{{$datas->nama_pemasok}}</td>
                   <td>{{$datas->total_bayar}}</td>
                   <td>
-                    <a href="" class="btn btn-info btn-xs"></i>Detail</a>
-                    <a href="{{route('pelunasan_hutang.show', $datas->id_pembelian)}}" class="btn btn-success btn-xs"></i>Hutang</a>
+                    <a href="{{route('detail.show', $datas->id_pembelian)}}" class="btn btn-info btn-xs"></i>Detail</a>
+                    <a href="{{route('lihat_hutang.show', $datas->id_pembelian)}}" class="btn btn-warning btn-xs"></i>Hutang</a>
                     <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a> 
                   </td>
                 </tr>

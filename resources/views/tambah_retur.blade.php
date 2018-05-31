@@ -99,7 +99,7 @@
                   <label style="width: 100%;">Nama Barang :</label>
                   <select class="form-control select2" style="width:75%;" name="barang" value="{{ old('barang') }}">
                     <option value="">Pilih Barang</option>
-                    @foreach($dapat_pemasok as $cari)
+                    @foreach($dapat_barang as $cari)
                     <option value="{{$cari->id_barang}}">{{$cari->nama_barang}}</option>
                     @endforeach
                   </select>

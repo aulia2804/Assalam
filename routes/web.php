@@ -47,12 +47,15 @@ Route::resource('tambah_satuan', 'SatuanController');
 Route::resource('ubah_satuan', 'SatuanController');
 
 Route::resource('data_transaksi_pembelian', 'PembelianController');
+Route::resource('detail', 'PembelianController');
+Route::resource('lihat_hutang', 'HutangController');
 Route::resource('pelunasan_hutang', 'HutangController');
 Route::resource('transaksi_pembelian', 'TranPemController');
 Route::resource('tambah_barang', 'DePemController');
 Route::resource('hapus', 'DePemController');
 Route::get('autocomplete/{id}', 'TranPemController@autocomplete');
 Route::post('tambah_pemasok', 'DePemController@tambahPemasok');
+Route::post('tambah_satu', 'DePemController@tambahSatuan');
 Route::post('dpbeli', 'DePemController@uangmuka');
 
 Route::resource('retur_pembelian', 'TranRetController');
@@ -74,5 +77,6 @@ Route::post('dpjual', 'DePenController@uangmuka');
 Route::get('/table', function () {
     return view('table');
 });
+
 
 

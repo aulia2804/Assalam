@@ -70,7 +70,6 @@
             <li class="user-header">
               <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="img-circle" alt="User Image">
               <p>
-                
               </p>
             </li>
             <!-- Menu Body -->
