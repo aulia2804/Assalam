@@ -23,8 +23,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
               <div class="box box-default">
                 <div class="box-header with-border">
                   <h3 class="box-title">Transaksi</h3>
@@ -36,7 +36,13 @@
                   <div class="row" style="padding: 20px">
                     <!-- Date -->
                     <div class="form-group">
-                      <label>Tanggal Pelunasan :</label>
+                      <label style="width: 100%;">ID Pembelian :</label>
+                      <!--input-->
+                      <input type="text" class="form-control" name="id_pembelian" value="{{ $id_pembelian }}" style="width: 200px">
+                    </div>
+                    <!-- /.form group -->
+                    <div class="form-group">
+                      <label style="width: 100%">Tanggal Pelunasan :</label>
                       <!--input-->
                       <div class="input-group date" style="width: 250px">
                         <div class="input-group-addon">
@@ -48,9 +54,9 @@
                     </div>
                     <!-- /.form group -->
                     <div class="form-group">
-                      <label>Jumlah Uang :</label>
+                      <label style="width: 100%">Jumlah Uang :</label>
                       <!--input-->
-                      <input type="text" class="form-control" name="uang" style="width: 250px">
+                      <input type="text" class="form-control" name="uang" style="width: 200px">
                     </div>
                     <!-- /.form group -->
                     <div class="form-group" style="text-align: center; padding-top: 20px" >
@@ -117,7 +123,6 @@
   @include ('footer')
 </div>
 <!-- ./wrapper -->
-<!-- Page script -->
 <script>
   $(function () {
     //Initialize Select2 Elements

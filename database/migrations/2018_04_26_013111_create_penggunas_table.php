@@ -24,6 +24,8 @@ class CreatePenggunasTable extends Migration
             $table->enum('rule',['Admin','Pemilik']);
             $table->enum('status',['Active','Non Active'])->default('Non Active');
             $table->enum('status_pengguna',['Publish','Draft'])->default('Publish');
+
+            $table->rememberToken();
             $table->timestamps();
         });
     }

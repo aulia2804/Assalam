@@ -20,7 +20,7 @@ class CreateBarangsTable extends Migration
             $table->string('nama_barang',100);
             $table->integer('harga_beli');
             $table->integer('harga_jual');
-            $table->integer('stok');
+            $table->float('stok',8,2);
             $table->enum('status_barang',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 

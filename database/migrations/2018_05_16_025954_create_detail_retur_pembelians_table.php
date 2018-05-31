@@ -17,7 +17,7 @@ class CreateDetailReturPembeliansTable extends Migration
             $table->increments('id_detail_retur');
             $table->integer('id_retur_pembelian')->unsigned();
             $table->integer('id_barang')->unsigned();
-            $table->integer('jumlah_barang');
+            $table->float('jumlah_barang',8,2);
             $table->integer('total_harga');
             $table->string('deskripsi_retur',200);
             $table->enum('proses',['Proses','Selesai'])->default('Proses');

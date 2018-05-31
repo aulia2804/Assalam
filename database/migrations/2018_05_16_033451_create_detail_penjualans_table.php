@@ -17,7 +17,7 @@ class CreateDetailPenjualansTable extends Migration
             $table->increments('id_detail_penjualan');
             $table->integer('id_penjualan')->unsigned();
             $table->integer('id_barang')->unsigned();
-            $table->integer('jumlah_barang');
+            $table->float('jumlah_barang',8,2);
             $table->integer('total_harga');
             $table->enum('status_depen',['Publish','Draft'])->default('Publish');
             $table->timestamps();

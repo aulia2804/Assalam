@@ -62,7 +62,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="user-image" alt="User Image">
             <span class="hidden-xs">
-              
+              {{ \Illuminate\Support\Facades\Auth::user()->rule }}
             </span>
           </a>
           <ul class="dropdown-menu">
@@ -70,6 +70,7 @@
             <li class="user-header">
               <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="img-circle" alt="User Image">
               <p>
+                {{ \Illuminate\Support\Facades\Auth::user()->rule }}
               </p>
             </li>
             <!-- Menu Body -->
@@ -87,7 +88,15 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-right">
-                <a href="{{url('logout')}}" class="btn btn-default btn-flat">Keluar</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
               </div>
             </li>
           </ul>

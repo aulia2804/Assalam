@@ -19,10 +19,10 @@
         <li class="active">Satuan</li>
       </ol>
     </section>
-    <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Tabel Data Satuan</h3>

@@ -17,7 +17,7 @@ class CreateDetailPembeliansTable extends Migration
             $table->increments('id_detail_pembelian');
             $table->integer('id_pembelian')->unsigned();
             $table->integer('id_barang')->unsigned();
-            $table->integer('jumlah_barang');
+            $table->float('jumlah_barang',8,2);
             $table->integer('total_harga');
             $table->enum('status_depem',['Publish','Draft'])->default('Publish');
             $table->timestamps();
