@@ -7,11 +7,7 @@ use DB;
 
 class PenjualanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $data = DB::table('transaksi_penjualan')
@@ -33,46 +29,50 @@ class PenjualanController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $data1 = DB::table('transaksi_penjualan')
+            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.nama_barang','barang.id_barang','barang.harga_beli','barang.harga_jual','satuan.id_satuan','satuan.nama_satuan','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.alamat_pelanggan')
+            ->join('detail_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_penjualan')
+            ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
+            ->join('barang','barang.id_barang','=','detail_penjualan.id_barang')
+            ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
+            ->where('transaksi_penjualan.id_penjualan',$id)
+            ->groupBy('id_penjualan')
+            ->get();
+
+        $data2 = DB::table('transaksi_penjualan')
+            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.nama_barang','barang.id_barang','barang.harga_beli','barang.harga_jual','satuan.id_satuan','satuan.nama_satuan','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.alamat_pelanggan','pelanggan.kontak_pelanggan')
+            ->join('detail_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_penjualan')
+            ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
+            ->join('barang','barang.id_barang','=','detail_penjualan.id_barang')
+            ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
+            ->where('transaksi_penjualan.id_penjualan',$id)
+            ->groupBy('id_pelanggan')
+            ->get();
+
+        $data3 = DB::table('transaksi_penjualan')
+            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.nama_barang','barang.id_barang','barang.harga_beli','barang.harga_jual','satuan.id_satuan','satuan.nama_satuan','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.alamat_pelanggan','pelanggan.kontak_pelanggan')
+            ->join('detail_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_penjualan')
+            ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
+            ->join('barang','barang.id_barang','=','detail_penjualan.id_barang')
+            ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
+            ->where('transaksi_penjualan.id_penjualan',$id)
+            ->orderBy('id_detail_penjualan','ASC')
+            ->get();
+        return view('detail_penjualan',compact('data1','data2','data3'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

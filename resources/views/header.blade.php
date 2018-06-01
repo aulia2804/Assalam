@@ -73,32 +73,45 @@
                 {{ \Illuminate\Support\Facades\Auth::user()->rule }}
               </p>
             </li>
-            <!-- Menu Body -->
-            <li class="user-body">
-              <div class="row">
-                <div class="col-xs-6 text-center">
-                  <a href="#">Ubah Profil</a>
+            @if(\Illuminate\Support\Facades\Auth::user()->rule == 'Pemilik')
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-right">
+                  <a class="dropdown-item" 
+                    href="{{ route('logout') }}" 
+                    onclick="event.preventDefault(); 
+                    document.getElementById('logout-form').submit();">
+                      {{ __('Logout') }}
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                 </div>
-                <div class="col-xs-6 text-center">
-                  <a href="#">Ubah Password</a>
+              </li>
+            @else
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-6 text-center">
+                    <a href="#">Ubah Profil</a>
+                  </div>
+                  <div class="col-xs-6 text-center">
+                    <a href="#">Ubah Password</a>
+                  </div>
                 </div>
-              </div>
-              <!-- /.row -->
-            </li>
-            <!-- Menu Footer-->
-            <li class="user-footer">
-              <div class="pull-right">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-              </div>
-            </li>
+                <!-- /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-right">
+                  <a class="dropdown-item" 
+                    href="{{ route('logout') }}" 
+                    onclick="event.preventDefault(); 
+                    document.getElementById('logout-form').submit();">
+                      {{ __('Logout') }}
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                </div>
+              </li>
+            @endif
           </ul>
         </li>
       </ul>

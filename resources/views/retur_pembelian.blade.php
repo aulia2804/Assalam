@@ -41,6 +41,8 @@
                     <input type="text" class="form-control pull-right" id="datepicker" name="tanggal">
                   </div>
                   <!-- /.input group -->
+                  <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message1')}}</label> 
+                  <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message2')}}</label> 
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">

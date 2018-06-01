@@ -15,8 +15,7 @@
         Pengguna
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>Master</li>
+        <li><i class="fa fa-dashboard"></i> Master</li>
         <li>Pengguna</li>
       </ol>
     </section>
@@ -56,7 +55,11 @@
                   <td>{{$datas->rule}}</td>
                   <td>
                     @if($datas->status=='Active')
-                      <a href="{{url('active', $datas->id_pengguna)}}" class="btn btn-info btn-xs"></i>Active</a>
+                      @if($datas->rule=='Pemilik')
+                        <a href="{{url('active', $datas->id_pengguna)}}" class="btn btn-info btn-xs disabled"></i>Active</a>
+                      @else
+                        <a href="{{url('active', $datas->id_pengguna)}}" class="btn btn-info btn-xs"></i>Active</a>
+                      @endif
                     @else
                       <a href="{{url('nonactive', $datas->id_pengguna)}}" class="btn btn-danger btn-xs">Non Active</a>
                     @endif

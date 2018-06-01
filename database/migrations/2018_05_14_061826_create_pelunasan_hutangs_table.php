@@ -18,7 +18,6 @@ class CreatePelunasanHutangsTable extends Migration
             $table->integer('id_pembelian')->unsigned();
             $table->date('tanggal_pelunasan_hutang');
             $table->integer('bayar_hutang');
-            $table->integer('sisa_hutang');
             $table->string('status',15);
             $table->enum('status_hutang',['Publish','Draft'])->default('Publish');
             $table->timestamps();

@@ -202,23 +202,24 @@ class DePemController extends Controller
     public function uangmuka(Request $request)
     {
         $id = DB::table('transaksi_pembelian')
-                ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar')
+                ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar','transaksi_pembelian.sisa_hutang')
                 ->orderBy('id_pembelian', 'DESC')
                 ->first();
+
+        $sisa = $id->total_bayar-$request->uangmuka;
+
         DB::table('transaksi_pembelian')
             ->where('id_pembelian', $id->id_pembelian)
             ->update([
             'uang_muka' => $request->uangmuka,
+            'sisa_hutang' => $sisa,
             'updated_at' => Carbon::now()
         ]);
-
-        $sisa = $id->total_bayar-$request->uangmuka;
 
         $pelunasan = new PelunasanHutang();
         $pelunasan->id_pembelian = $id->id_pembelian;
         $pelunasan->tanggal_pelunasan_hutang = $id->tanggal_pembelian;
         $pelunasan->bayar_hutang = $request->uangmuka;
-        $pelunasan->sisa_hutang = $sisa;
         if($sisa!=0){
             $pelunasan->status = 'Belum Lunas';
         }else{
@@ -275,7 +276,7 @@ class DePemController extends Controller
     public function hapuspembelian()
     {
         $cek = DB::table('transaksi_pembelian')
-            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar','transaksi_pembelian.uang_muka')
+            ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','transaksi_pembelian.total_bayar','transaksi_pembelian.uang_muka','transaksi_pembelian.sisa_hutang')
             ->orderBy('id_pembelian','DESC')
             ->first();
         $cek2 = DB::table('detail_pembelian')

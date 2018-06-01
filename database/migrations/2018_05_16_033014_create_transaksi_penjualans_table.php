@@ -21,6 +21,7 @@ class CreateTransaksiPenjualansTable extends Migration
             $table->enum('cara_penjualan',['Tunai','Kredit']);
             $table->integer('total_bayar');
             $table->integer('uang_muka');
+            $table->integer('sisa_piutang');
             $table->enum('status_penjualan',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 

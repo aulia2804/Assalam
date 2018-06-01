@@ -18,8 +18,7 @@
         Pemasok
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>Master</li>
+        <li><i class="fa fa-dashboard"></i> Master</li>
         <li>Pemasok</li>
       </ol>
     </section>

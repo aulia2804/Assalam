@@ -49,8 +49,8 @@
                   <td>{{$datas->total_bayar}}</td>
                   <td>{{$datas->uang_muka}}</td>
                   <td>
-                    <a href="#" class="btn btn-info btn-xs"></i>Detail</a>
-                    <a href="{{URL::to('pelunasan_hutang')}}" class="btn btn-success btn-xs"></i>Hutang</a>
+                    <a href="{{route('detail_penjualan.show',$datas->id_penjualan)}}" class="btn btn-info btn-xs"></i>Detail</a>
+                    <a href="{{route('lihat_piutang.show', $datas->id_penjualan)}}" class="btn btn-success btn-xs"></i>Piutang</a>
                     <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a> 
                   </td>
                 </tr>

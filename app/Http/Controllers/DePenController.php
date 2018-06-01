@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\DetailPenjualan;
+use App\PelunasanPiutang;
+use App\TransaksiPenjualan;
 use Carbon\Carbon;
 use App\Pelanggan;
 use App\Satuan;
 use App\Barang;
 use Response;
 use Alert;
-use App\TransaksiPenjualan;
 use DB;
 
 class DePenController extends Controller
@@ -20,7 +21,7 @@ class DePenController extends Controller
     public function index()
     {
         $data = DB::table('transaksi_penjualan')
-                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.id_barang','barang.nama_barang','barang.harga_beli','barang.harga_jual','barang.stok','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.kontak_pelanggan','pelanggan.alamat_pelanggan','satuan.id_satuan','satuan.nama_satuan')
+                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','transaksi_penjualan.sisa_piutang','detail_penjualan.id_detail_penjualan','detail_penjualan.jumlah_barang','detail_penjualan.total_harga','barang.id_barang','barang.nama_barang','barang.harga_beli','barang.harga_jual','barang.stok','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.kontak_pelanggan','pelanggan.alamat_pelanggan','satuan.id_satuan','satuan.nama_satuan')
                 ->join('detail_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_detail_penjualan')
                 ->join('barang','barang.id_barang','=','detail_penjualan.id_barang')
                 ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
@@ -29,7 +30,7 @@ class DePenController extends Controller
                 ->first();
         $data_total = TransaksiPenjualan::orderBy('id_penjualan', 'DESC')->first();
         $id = DB::table('transaksi_penjualan')
-            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.kontak_pelanggan','pelanggan.alamat_pelanggan')
+            ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.sisa_piutang','pelanggan.id_pelanggan','pelanggan.nama_pelanggan','pelanggan.kontak_pelanggan','pelanggan.alamat_pelanggan')
             ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
             ->orderBy('id_penjualan', 'DESC')
             ->first();
@@ -81,7 +82,7 @@ class DePenController extends Controller
         }else{
 
             $id = DB::table('transaksi_penjualan')
-                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan')
+                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.sisa_piutang')
                 ->orderBy('id_penjualan', 'DESC')
                 ->first();
 
@@ -122,15 +123,33 @@ class DePenController extends Controller
     public function uangmuka(Request $request)
     {
         $id = DB::table('transaksi_penjualan')
-                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan')
+                ->select('transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','transaksi_penjualan.cara_penjualan','transaksi_penjualan.total_bayar','transaksi_penjualan.uang_muka','transaksi_penjualan.sisa_piutang')
                 ->orderBy('id_penjualan', 'DESC')
                 ->first();
+
+        $sisa = $id->total_bayar-$request->uangmuka;
+
         DB::table('transaksi_penjualan')
             ->where('id_penjualan', $id->id_penjualan)
             ->update([
             'uang_muka' => $request->uangmuka,
+            'sisa_piutang' => $sisa,
             'updated_at' => Carbon::now()
         ]);
+
+        $sisa = $id->total_bayar-$request->uangmuka;
+
+        $pelunasan = new PelunasanPiutang();
+        $pelunasan->id_penjualan = $id->id_penjualan;
+        $pelunasan->tanggal_pelunasan_piutang = $id->tanggal_penjualan;
+        $pelunasan->bayar_piutang = $request->uangmuka;
+        if($sisa!=0){
+            $pelunasan->status = 'Belum Lunas';
+        }else{
+            $pelunasan->status = 'Lunas';
+        }
+        $pelunasan->status_piutang = 'Publish';
+        $pelunasan->save();
         return redirect('data_transaksi_penjualan');
     }
 

@@ -23,8 +23,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
+            <div class="col-md-5">
               <div class="box box-default">
                 <div class="box-header with-border">
                   <h3 class="box-title">Transaksi</h3>
@@ -51,6 +50,8 @@
                         <input type="text" class="form-control pull-right" id="datepicker" name="pelunasan" >
                       </div>
                       <!-- /.input group -->
+                      <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message1')}}</label>
+                      <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message2')}}</label>
                     </div>
                     <!-- /.form group -->
                     <div class="form-group">
@@ -59,59 +60,107 @@
                       <input type="text" class="form-control" name="uang" style="width: 200px">
                     </div>
                     <!-- /.form group -->
+                    <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message3')}}</label>
                     <div class="form-group" style="text-align: center; padding-top: 20px" >
-                      <input type="submit" class="btn btn-success" value="Simpan">
+                      <input type="submit" class="btn btn-success" value="Tambah Pelunasan">
                     </div>
                   </div>
                   <!-- /.row -->
                   </form>  
+                  <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th style="text-align: center;">ID</th>
+                      <th style="text-align: center;">Total Pembelian</th>
+                      <th style="text-align: center;">Sisa Hutang</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <?php $i=0; ?>
+                      @foreach($data1 as $dapat)
+                      <tr>
+                        <td style="text-align: center;">{{$dapat->id_pembelian}}</td>
+                        <td style="text-align: center;">{{$dapat->total_bayar}}</td>
+                        <td style="text-align: center;">{{$dapat->sisa_hutang}}</td>
+                      </tr> 
+                      <?php $i=1; ?>
+                      @endforeach
+                    </tbody>
+                  </table>  
                 </div>
                 <!-- /.box-body -->
               </div>
               <!-- /.box -->
             </div>
             <!-- / .col -->
+            <div class="col-md-7">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Riwayat Pelunasan Hutang</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="background-color: #d2d6de">
+                  <table id="example3" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th style="text-align: center;">ID</th>
+                      <th style="text-align: center;">Tanggal Pelunasan</th>
+                      <th style="text-align: center;">Jumlah Uang</th>
+                      <th style="text-align: center;">Status Hutang</th>
+                      <th style="text-align: center;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <?php $i=0; ?>
+                      @foreach($data as $dapat)
+                      <tr>
+                        <td>{{$dapat->id_pelunasan_hutang}}</td>
+                        <td>{{date_format(date_create("$dapat->tanggal_pelunasan_hutang"), "d F Y")}}</td>
+                        <td>{{$dapat->bayar_hutang}}</td>
+                        <td>{{$dapat->status}}</td>
+                        <td>
+                          @if($i!=0)
+                          <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del{{$dapat->id_pelunasan_hutang}}">Hapus</button>
+                          @endif
+                        </td>
+                      </tr>
+                      <div class="modal fade" id="del{{$dapat->id_pelunasan_hutang}}">
+                        <div class="modal-dialog" style="witdh:400px">
+                          <div class="modal-content" >
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">Peringatan</h4>
+                            </div>
+                            <div class="modal-body">
+                              <!-- text input -->
+                              <p>Anda yakin ingin menghapus pelunasan ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                              <form action="{{route('pelunasan_hutang.destroy' , $dapat->id_pelunasan_hutang ) }}" method="POST">
+                                  {{ csrf_field() }}
+                                  {{ method_field('DELETE') }}
+                                  <button class="btn btn-danger">Hapus</button>
+                              </form> 
+                            </div>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+                      <!-- /.modal --> 
+                      <?php $i=1; ?>
+                      @endforeach
+                    </tbody>
+                  </table>  
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
           </div>
           <!-- / .row -->
-        </div>
-        <!-- / .col -->
-        <div class="col-md-12">
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Riwayat Pelunasan Hutang</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="background-color: #d2d6de">
-              <table id="example3" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th style="text-align: center;">ID</th>
-                  <th style="text-align: center;">Tanggal Pelunasan</th>
-                  <th style="text-align: center;">Jumlah Uang</th>
-                  <th style="text-align: center;">Sisa Hutang</th>
-                  <th style="text-align: center;">Status Hutang</th>
-                  <th style="text-align: center;"></th>
-                </tr>
-                </thead>
-                <tbody>
-                  @foreach($data as $dapat)
-                  <tr>
-                    <td>{{$dapat->id_pelunasan_hutang}}</td>
-                    <td>{{date_format(date_create("$dapat->tanggal_pelunasan_hutang"), "d F Y")}}</td>
-                    <td>{{$dapat->bayar_hutang}}</td>
-                    <td>{{$dapat->sisa_hutang}}</td>
-                    <td>{{$dapat->status}}</td>
-                    <td>
-                      <button class="btn btn-danger btn-xs">Hapus</button>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>  
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
         </div>
         <!-- / .col -->
       </div>

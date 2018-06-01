@@ -18,7 +18,6 @@ class CreatePelunasanPiutangsTable extends Migration
             $table->integer('id_penjualan')->unsigned();
             $table->date('tanggal_pelunasan_piutang');
             $table->integer('bayar_piutang');
-            $table->integer('sisa_piutang');
             $table->string('status',15);
             $table->enum('status_piutang',['Publish','Draft'])->default('Publish');
             $table->timestamps();

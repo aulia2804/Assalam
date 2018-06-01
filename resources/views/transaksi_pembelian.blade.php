@@ -66,6 +66,8 @@
                     <input type="text" class="form-control pull-right" id="datepicker1" name="kredit">
                   </div>
                   <!-- /.input group -->
+                  <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message')}}</label> 
+                  <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message2')}}</label> 
                 </div>
                 <!-- /.form group -->
                 <div class="form-group" style="text-align: center; padding-top: 20px" >

@@ -21,6 +21,7 @@ class CreateTransaksiPembeliansTable extends Migration
             $table->date('tanggal_jatuh_tempo');
             $table->integer('total_bayar');
             $table->integer('uang_muka');
+            $table->integer('sisa_hutang');
             $table->enum('status_pembelian',['Publish','Draft'])->default('Publish');
             $table->timestamps();
 

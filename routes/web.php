@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function(){
     	return view('beranda');
 	});
 
+	Route::get('/kalender', function () {
+    	return view('kalender');
+	});
+
 	Route::resources([
 		'pengguna' => 'PenggunaController',
 		'tambah_pengguna' => 'PenggunaController',
@@ -48,6 +52,9 @@ Route::middleware('auth')->group(function(){
 		'tambah_retur' => 'DeretController',
 		'hapus_retur' => 'DeretController',
 		'data_transaksi_penjualan' => 'PenjualanController',
+		'detail_penjualan' => 'PenjualanController',
+		'lihat_piutang' => 'PiutangController',
+		'pelunasan_piutang' => 'PiutangController',
 		'transaksi_penjualan' => 'TranPenController',
 		'tambah_penjualan' => 'DePenController',
 		'hapus_detail' => 'DePenController',
