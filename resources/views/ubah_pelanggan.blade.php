@@ -15,11 +15,9 @@
     <section class="content-header">
       <h1>
         Pelanggan
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>Master</li>
+        <li><i class="fa fa-dashboard">Master</i></li>
         <li>Pelanggan</li>
       </ol>
     </section>

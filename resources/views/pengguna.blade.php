@@ -24,8 +24,8 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Tabel Data Pengguna</h3>
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Tabel Data Pengguna</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

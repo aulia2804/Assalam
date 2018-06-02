@@ -1,90 +1,99 @@
 <!DOCTYPE html>
 <html>
-
   @include ('head')
-
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
   @include ('header')
-
   <!-- Left side column. contains the logo and sidebar -->
   @include ('sidebar')
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
+        Beranda
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li class="active">Dashboard</li>
+        <li><i class="fa fa-dashboard"></i> Beranda</li>
       </ol>
     </section>
-
-    <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-              <p>Bounce Rate</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-3 col-xs-5">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
+              @foreach($pembelian as $pembelians)
+              <h3>{{$pembelians->pembelian}}</h3>
+              @endforeach
+              <p>Pembelian</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-pricetag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{URL::to('/data_transaksi_pembelian')}}" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-3 col-xs-5">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>65</h3>
-
-              <p>Unique Visitors</p>
+              @foreach($penjualan as $penjualans)
+              <h3>{{$penjualans->penjualan}}</h3>
+              @endforeach
+              <p>Penjualan</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-pricetags"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{URL::to('/data_transaksi_penjualan')}}" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        @if($jual->total>$beli->total)
+          <div class="col-lg-3 col-xs-5">
+            <!-- small box -->
+            <div class="small-box bg-green">
+              <div class="inner">
+                <h3>{{$hasil}}</h3>
+                <p>Untung</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-happy"></i>
+              </div>
+              <a href="#" class="small-box-footer"></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        @else
+          <div class="col-lg-3 col-xs-5">
+            <!-- small box -->
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>{{$hasil}}</h3>
+                <p>Rugi</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-sad"></i>
+              </div>
+              <a class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        @endif
+        <div class="col-lg-3 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{$barang}}</h3>
+              <p>Barang</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-filing"></i>
+            </div>
+            <a href="{{URL::to('/barang')}}" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -94,107 +103,107 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+          <!-- Calendar -->
+          <div class="box">
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Peringatan Barang Habis</h3>
             </div>
-            <div class="box-body chart-responsive">
-              <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">Nama Barang</th>
+                    <th style="text-align:center">Jumlah</th>
+                  </tr>
+                </thead>
+                <tbody>
+                @foreach($stok as $stoks)
+                <tr>
+                  <td>{{$stoks->id_barang}}</td>
+                  <td>{{$stoks->nama_barang}}</td>
+                  <td>{{$stoks->stok}}</td>
+                </tr>
+                @endforeach
+                </tbody>
+              </table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </section>
-        <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
+        <!-- right col -->
+        <section class="col-md-6">
           <!-- Calendar -->
-          <div class="box box-solid bg-green-gradient">
-            <div class="box-header">
-              <i class="fa fa-calendar"></i>
-
-              <h3 class="box-title">Calendar</h3>
-              <!-- tools box -->
-              <div class="pull-right box-tools">
-                <!-- button with a dropdown -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-bars"></i></button>
-                  <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="#">Add new event</a></li>
-                    <li><a href="#">Clear events</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">View calendar</a></li>
-                  </ul>
-                </div>
-                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-                </button>
-              </div>
-              <!-- /. tools -->
+          <div class="box">
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Peringatan Jatuh Tempo</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body no-padding">
-              <!--The calendar -->
-              <div id="calendar" style="width: 100%"></div>
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">Tanggal Jatuh Tempo</th>
+                    <th style="text-align:center">Pemasok</th>
+                    <th style="text-align:center">Hari - </th>
+                  </tr>
+                </thead>
+                <tbody>
+                @foreach($tanggal as $tanggals)
+                  <?php 
+                    $start_date = date('Y-m-d');
+                    $end_date = $tanggals->tanggal_jatuh_tempo;
+
+                    $start    = new \DateTime($start_date);
+                    $end      = new \DateTime($end_date);
+                    $interval = new \DateInterval('P1D'); // 1 day interval
+                    $period   = new \DatePeriod($start, $interval, $end);
+                    $jumlah=0;
+
+                    foreach ($period as $day) {
+                        $jumlah++;
+                    }
+
+                    if($jumlah<10){
+                  ?>
+
+                <tr>
+                  <td>{{$tanggals->id_pembelian}}</td>
+                  <td>{{date_format(date_create("$tanggals->tanggal_jatuh_tempo"), "d F Y")}}</td>
+                  <td>{{$tanggals->nama_pemasok}}</td>
+                  <td>{{$jumlah}}</td>
+                </tr>
+
+                <?php } ?>
+                @endforeach
+                </tbody>
+              </table>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer text-black">
-              <div class="row">
-                <div class="col-sm-6">
-                  <!-- Progress bars -->
-                  <div class="clearfix">
-                    <span class="pull-left">Task #1</span>
-                    <small class="pull-right">90%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #2</span>
-                    <small class="pull-right">70%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
           </div>
           <!-- /.box -->
         </section>
         <!-- right col -->
       </div>
       <!-- /.row (main row) -->
+      <div class="row">
+        <section class="col-md-12">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Grafik Penjualan dan Pembelian</h3>
+            </div>
+            <div class="box-body chart-responsive">
+              <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </section>
+      </div>
     </section>
     <!-- /.content -->
   </div>
@@ -214,14 +223,6 @@
       data: [
         {y: '2011 Q1', item1: 2666, item2: 2666},
         {y: '2011 Q2', item1: 2778, item2: 2294},
-        {y: '2011 Q3', item1: 4912, item2: 1969},
-        {y: '2011 Q4', item1: 3767, item2: 3597},
-        {y: '2012 Q1', item1: 6810, item2: 1914},
-        {y: '2012 Q2', item1: 5670, item2: 4293},
-        {y: '2012 Q3', item1: 4820, item2: 3795},
-        {y: '2012 Q4', item1: 15073, item2: 5967},
-        {y: '2013 Q1', item1: 10687, item2: 4460},
-        {y: '2013 Q2', item1: 8432, item2: 5713}
       ],
       xkey: 'y',
       ykeys: ['item1', 'item2'],
@@ -232,6 +233,105 @@
   });
 </script>
 
+<script>
+  $(function () {
+    $('#example1').DataTable({
+    'paging'      : true,
+    'lengthChange': true,
+    'searching'   : false,
+    'ordering'    : true,
+    'info'        : true,
+    'autoWidth'   : true
+    })
+  })
+</script>
+<script>
+  $(function () {
+    $('#example2').DataTable({
+    'paging'      : true,
+    'lengthChange': true,
+    'searching'   : false,
+    'ordering'    : true,
+    'info'        : true,
+    'autoWidth'   : true
+    })
+  })
+</script>
 
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  theme:"light2",
+  animationEnabled: true,
+  axisY :{
+    includeZero: false,
+    title: "Jumlah Transaksi",
+    suffix: ""
+  },
+  toolTip: {
+    shared: "true"
+  },
+  legend:{
+    cursor:"pointer",
+    itemclick : toggleDataSeries
+  },
+  data: [
+ 
+ 
+  {
+    type: "spline", 
+    showInLegend: true,
+    yValueFormatString: "##",
+    name: "Penjualan",
+    dataPoints: [
+      { label: "Januari", y: <?php echo $bulan13; ?> },
+      { label: "Februari", y: <?php echo $bulan14; ?> },
+      { label: "Maret", y: <?php echo $bulan15; ?> },
+      { label: "April", y: <?php echo $bulan16; ?> },
+      { label: "Mei", y: <?php echo $bulan17; ?> },
+      { label: "Juni", y: <?php echo $bulan18; ?> },
+      { label: "Juli", y: <?php echo $bulan19; ?> },
+      { label: "Agustus", y: <?php echo $bulan20; ?> },
+      { label: "September", y: <?php echo $bulan21; ?> },
+      { label: "Oktober", y: <?php echo $bulan22; ?> },
+      { label: "November", y: <?php echo $bulan23; ?> },
+      { label: "Desember", y: <?php echo $bulan24; ?> }
+    ]
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    yValueFormatString: "##",
+    name: "Pembelian",
+    dataPoints: [
+      { label: "Januari", y: <?php echo $bulan1; ?> },
+      { label: "Februari", y: <?php echo $bulan2; ?> },
+      { label: "Maret", y: <?php echo $bulan3; ?> },
+      { label: "April", y: <?php echo $bulan4; ?> },
+      { label: "Mei", y: <?php echo $bulan5; ?> },
+      { label: "Juni", y: <?php echo $bulan6; ?> },
+      { label: "Juli", y: <?php echo $bulan7; ?> },
+      { label: "Agustus", y: <?php echo $bulan8; ?> },
+      { label: "September", y: <?php echo $bulan9; ?> },
+      { label: "Oktober", y: <?php echo $bulan10; ?> },
+      { label: "November", y: <?php echo $bulan11; ?> },
+      { label: "Desember", y: <?php echo $bulan12; ?> }
+    ]
+  }]
+});
+chart.render();
+
+function toggleDataSeries(e) {
+  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  chart.render();
+}
+
+}
+</script>
 </body>
 </html>

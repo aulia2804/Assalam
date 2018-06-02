@@ -25,7 +25,7 @@ class TranPenController extends Controller
     public function store(Request $request)
     {
         $data = new TransaksiPenjualan();
-        $data->id_pengguna = 'Auth::user()->id_pengguna';
+        $data->id_pengguna = Auth::user()->id_pengguna;
         $data->tanggal_penjualan = date('Y-m-d', strtotime($request->tanggal));
         $data->cara_penjualan = $request->cara;
         $data->id_pelanggan = $request->pelanggan;

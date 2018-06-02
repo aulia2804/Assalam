@@ -17,15 +17,9 @@ Route::get('/', function () {
 })->middleware('guest');
 
 Route::middleware('auth')->group(function(){
-	Route::get('/beranda', function () {
-    	return view('beranda');
-	});
-
-	Route::get('/kalender', function () {
-    	return view('kalender');
-	});
 
 	Route::resources([
+		'ubah_profil' => 'AdminController',
 		'pengguna' => 'PenggunaController',
 		'tambah_pengguna' => 'PenggunaController',
 		'detail_pengguna' => 'PenggunaController',
@@ -58,10 +52,18 @@ Route::middleware('auth')->group(function(){
 		'transaksi_penjualan' => 'TranPenController',
 		'tambah_penjualan' => 'DePenController',
 		'hapus_detail' => 'DePenController',
+		'beranda' => 'BerandaController',
+		'laporan_pembelian' => 'LaporanPembelianController',
+		'laporan_penjualan' => 'LaporanPenjualanController',
 
 	]);
 
+	Route::get('printPembelian', 'LaporanPembelianController@unduhpembelian');
+
+	Route::post('updateprof', 'AdminController@update_profil');
+
 	Route::get('hapus_penjualan', 'DePenController@hapuspenjualan');
+	Route::get('profil/{id}', 'AdminController@update');
 	Route::get('hapus_pembelian', 'DePemController@hapuspembelian');
 	Route::get('hret', 'DeretController@hapusretur');
 

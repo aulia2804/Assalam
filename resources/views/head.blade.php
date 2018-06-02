@@ -107,5 +107,6 @@
   <!-- iCheck -->
   <script src="{{asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
   <script src="{{asset('js/sweetalert.min.js')}}"></script>
+  <script src="{{asset('js/canvasjs.min.js')}}"></script>
   
 </head>

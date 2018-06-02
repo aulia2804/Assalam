@@ -64,11 +64,11 @@
               <li><a href="{{URL::to('/data_transaksi_penjualan')}}"><i class="fa fa-circle-o"></i> Data Transaksi Penjualan</a></li>
             </ul>
           </li>
-          <li>
+<!--           <li>
             <a href="{{URL::to('/kalender')}}">
               <i class="fa fa-calendar"></i> <span>Kalender</span>
             </a>
-          </li>
+          </li> -->
           <li class="treeview">
             <a href="#">
               <i class="fa fa-folder"></i> <span>Laporan</span>
@@ -77,8 +77,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{URL::to('/table')}}"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
-              <li><a href=""><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
+              <li><a href="{{URL::to('/laporan_pembelian')}}"><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
+              <li><a href="{{URL::to('/laporan_penjualan')}}"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
             </ul>
           </li>
         </ul>
@@ -141,11 +141,11 @@
               <li><a href="{{URL::to('/data_transaksi_penjualan')}}"><i class="fa fa-circle-o"></i> Data Transaksi Penjualan</a></li>
             </ul>
           </li>
-          <li>
+<!--           <li>
             <a href="{{URL::to('/kalender')}}">
               <i class="fa fa-calendar"></i> <span>Kalender</span>
             </a>
-          </li>
+          </li> -->
           <li class="treeview">
             <a href="#">
               <i class="fa fa-folder"></i> <span>Laporan</span>
@@ -154,13 +154,12 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{URL::to('/table')}}"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
-              <li><a href=""><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
+              <li><a href="{{URL::to('/laporan_pembelian')}}"><i class="fa fa-circle-o"></i> Laporan Pembelian</a></li>
+              <li><a href="{{URL::to('/laporan_penjualan')}}"><i class="fa fa-circle-o"></i> Laporan Penjualan</a></li>
             </ul>
           </li>
         </ul>
       @endif
-      
     </section>
     <!-- /.sidebar -->
   </aside>
