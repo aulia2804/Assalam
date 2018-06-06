@@ -28,7 +28,7 @@
               <h3 class="box-title" style="color: #FDFEFE">Tabel Data Pengguna</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="background-color: #d2d6de">
               <div class="col-xs-8">
                 <a href="{{route('tambah_pengguna.create')}}" class="btn btn-success" style="margin-bottom: 10px"><i class="fa fa-plus"></i> Tambah</a>
               </div>

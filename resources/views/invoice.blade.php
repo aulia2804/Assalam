@@ -144,7 +144,7 @@ footer {
   </head>
   <body>
     <header class="clearfix">
-      <h1>Laporan Transaksi Pembelian <br/> Assalam Jaya</h1>
+      <h1>Laporan Detail Pembelian <br/> Assalam Jaya</h1>
       <div id="company" class="clearfix">
         <div>Assalam Jaya</div>
         <div>Jl. Kemiri - Pituruh,<br /> Desa Rejosari RT. 0/1</div>
@@ -160,24 +160,20 @@ footer {
         <thead>
           <tr>
             <th class="service">ID</th>
-            <th>Tanggal Pembelian</th>
-            <th>Tanggal Jatuh Tempo</th>
-            <th>Cara Pembelian</th>
-            <th>Pemasok</th>
-            <th>Total</th>
-            <th>Pegawai</th>
+            <th class="desc">Nama Barang</th>
+            <th>Harga</th>
+            <th>Jumlah</th>
+            <th>Subtotal</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($data as $datas)
+          @foreach($data1 as $a)
           <tr>
-            <td class="service">{{$datas->id_pembelian}}</td>
-            <td class="desc">{{date_format(date_create("$datas->tanggal_pembelian"), "d F Y")}}</td>
-            <td class="desc">{{date_format(date_create("$datas->tanggal_jatuh_tempo"), "d F Y")}}</td>
-            <td class="desc">{{$datas->cara_pembelian}}</td>
-            <td class="unit">{{$datas->nama_pemasok}}</td>
-            <td class="qty">{{ number_format($datas->total_bayar, 2)}}</td>
-            <td class="total">{{$datas->nama_pengguna}}</td>
+            <td class="service">{{$a->id_detail_pembelian}}</td>
+            <td class="desc">{{$a->nama_barang}}</td>
+            <td class="unit">{{ number_format($a->harga_beli, 2)}}</td>
+            <td class="qty">{{$a->jumlah_barang}}</td>
+            <td class="total">{{ number_format($a->total_harga, 2)}}</td>
           </tr>
           @endforeach
         </tbody>
@@ -188,3 +184,4 @@ footer {
     </footer>
   </body>
 </html>
+

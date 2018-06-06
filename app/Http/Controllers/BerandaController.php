@@ -42,21 +42,17 @@ class BerandaController extends Controller
 
         $stok = DB::table('barang')
         ->select('barang.id_barang','barang.nama_barang','barang.stok')
-        ->where('stok','<',5)
-        ->orderBy('id_barang', 'ASC')
-        ->get();
-
-        $stok = DB::table('barang')
-        ->select('barang.id_barang','barang.nama_barang','barang.stok')
-        ->where('stok','<',5)
+        ->where('stok','<',50)
+        ->where('status_barang','Publish')
         ->orderBy('id_barang', 'ASC')
         ->get();
 
         $tanggal = DB::table('transaksi_pembelian')
-        ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','detail_pembelian.id_detail_pembelian','barang.id_barang','pemasok.id_pemasok','pemasok.nama_pemasok')
+        ->select('transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_jatuh_tempo','detail_pembelian.id_detail_pembelian','barang.id_barang','pemasok.id_pemasok','pemasok.nama_pemasok','transaksi_pembelian.sisa_hutang')
         ->join('detail_pembelian','transaksi_pembelian.id_pembelian','=','detail_pembelian.id_pembelian')
         ->join('barang','barang.id_barang','=','detail_pembelian.id_barang')
         ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('sisa_hutang','>',0)
         ->orderBy('id_pembelian')
         ->get();
 

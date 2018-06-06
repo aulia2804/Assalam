@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Alert;
 use DB;
+use PDF;
 
 class ReturController extends Controller
 {
@@ -28,6 +29,38 @@ class ReturController extends Controller
         ->with('data', $data);
     }
 
+    public function unduhretur($id){
+        $a = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','barang.id_barang','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok','transaksi_pembelian.id_pembelian','transaksi_pembelian.tanggal_pembelian','transaksi_pembelian.cara_pembelian','transaksi_pembelian.tanggal_jatuh_tempo')
+        ->join('transaksi_pembelian','transaksi_pembelian.id_pembelian','=','retur_pembelian.id_pembelian')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->groupBy('id_retur_pembelian')
+        ->get();
+        $b = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','barang.id_barang','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->groupBy('id_pemasok')
+        ->get();
+        $c = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','detail_retur_pembelian.total_harga','barang.id_barang','barang.harga_beli','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->orderBy('id_detail_retur','ASC')
+        ->get();
+
+        $tanggal_cetak = Carbon::now();
+
+        $pdf = PDF::loadView('printRetur', array('a'=>$a, 'b'=>$b, 'c'=>$c, 'tanggal_cetak'=>$tanggal_cetak));
+        return $pdf->download('Retur Pembelian.pdf'); 
+    }
     public function create()
     {
         //
@@ -40,7 +73,31 @@ class ReturController extends Controller
 
     public function show($id)
     {
-        //
+        $aa = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','barang.id_barang','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->groupBy('id_retur_pembelian')
+        ->get();
+        $bb = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','barang.id_barang','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->groupBy('id_pemasok')
+        ->get();
+        $cc = DB::table('retur_pembelian')
+        ->select('retur_pembelian.id_retur_pembelian','retur_pembelian.tanggal_retur','detail_retur_pembelian.id_detail_retur','detail_retur_pembelian.jumlah_barang','detail_retur_pembelian.deskripsi_retur','detail_retur_pembelian.total_harga','barang.id_barang','barang.harga_beli','barang.nama_barang','pemasok.id_pemasok','pemasok.nama_pemasok','pemasok.kontak_pemasok','pemasok.alamat_pemasok')
+        ->join('detail_retur_pembelian','retur_pembelian.id_retur_pembelian','=','detail_retur_pembelian.id_retur_pembelian')
+        ->join('barang','barang.id_barang','=','detail_retur_pembelian.id_barang')
+        ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
+        ->where('retur_pembelian.id_retur_pembelian',$id)
+        ->orderBy('id_detail_retur','ASC')
+        ->get();
+        return view('detail_retur',compact('aa','bb','cc'));
     }
 
     public function edit($id)

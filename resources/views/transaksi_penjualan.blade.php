@@ -21,8 +21,8 @@
     <!-- Main content -->
     <section class="content">
       <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">Transaksi</h3>
+        <div class="box-header with-border" style="background-color: #1B4F72">
+          <h3 class="box-title" style="color: #FDFEFE">Transaksi</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body" style="background-color: #d2d6de">
@@ -38,14 +38,14 @@
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker" name="tanggal">
+                  <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" required>
                 </div>
                 <!-- /.input group -->
               </div>
               <!-- /.form group -->
               <div class="form-group">
                 <label>Pembayaran :</label>
-                <select class="form-control" style="width: 200px" name="cara">
+                <select class="form-control" style="width: 200px" name="cara" required>
                   <option value="">Pilih Jenis Pembayaran</option>
                   <option value="Tunai">Tunai</option>
                   <option value="Kredit">Kredit</option>
@@ -57,7 +57,7 @@
             <div class="col-md-6">
               <div class="form-group" style="width: 300px">
                 <label>Pelanggan :</label> 
-                <select class="form-control select2" style="width: 85%;" id="pelanggan" name="pelanggan">
+                <select class="form-control select2" style="width: 85%;" id="pel" name="pelanggan" required>
                   <option value="">Pilih Pelanggan</option>
                   @foreach($pelanggan as $pelanggans)
                   <option value="{{$pelanggans->id_pelanggan}}">{{$pelanggans->nama_pelanggan}}</option>
@@ -69,13 +69,13 @@
               <div class="form-group" style="width: 250px">
                 <label>Kontak :</label> 
                 <!-- text input -->
-                <input type="text" class="form-control" name="kontak" id="kontak" readonly>
+                <input type="text" class="form-control" name="kontak" id="no" readonly>
               </div>
               <!-- /.form-group -->
               <div class="form-group" style="width: 400px">
                 <label>Alamat :</label> 
                 <!-- text input -->
-                <input type="text" class="form-control" name="alamat" id="alamat" readonly>
+                <input type="text" class="form-control" name="alamat" id="al" readonly>
               </div>
               <!-- /.form-group -->
             </div>
@@ -94,6 +94,25 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+<script type="text/javascript">
+  $('#pel').change(function(e){
+    var pelanggan = $(this).val();
+    $.ajax({
+      url:'/auto/'+pelanggan,
+      type:'GET',
+      timeout:30000,
+      success:function(e){
+        if (e.length==0) {
+          $('#no').val('');
+          $('#al').val('');
+        }else{
+          $('#no').val(e[0].kontak_pelanggan);
+          $('#al').val(e[0].alamat_pelanggan);
+        }
+      }
+    })
+  })
+</script>
   <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
       <!-- url(nama route yang di web.php)-->
@@ -109,19 +128,19 @@
           <div class="form-group">
             <label>Nama :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="nama" >
+            <input type="text" class="form-control" style="width: 100%" name="nama" required>
           </div>
           <!-- /.form-group -->
           <div class="form-group">
             <label>Kontak :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="kontak" >
+            <input type="text" class="form-control" style="width: 100%" name="kontak" required>
           </div>
           <!-- /.form group -->
           <div class="form-group">
             <label>Alamat :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="alamat" >
+            <input type="text" class="form-control" style="width: 100%" name="alamat" required>
           </div>
           <!-- /.form group -->
         </div>
@@ -168,24 +187,6 @@
   })
 </script>
 
-<script type="text/javascript">
-  $('#pelanggan').change(function(e){
-    var pelanggan = $(this).val();
-    $.ajax({
-      url:'/autocomplete/'+pelanggan,
-      type:'GET',
-      timeout:30000,
-      success:function(e){
-        if (e.length==0) {
-          $('#kontak').val('');
-          $('#alamat').val('');
-        }else{
-          $('#kontak').val(e[0].kontak_pelanggan);
-          $('#alamat').val(e[0].alamat_pelanggan);
-        }
-      }
-    })
-  })
-</script>
+
 </body>
 </html>

@@ -22,12 +22,12 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Laporan Transaksi Penjualan</h3>
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Laporan Transaksi Penjualan</h3>
             </div>
             <!-- /.box-header -->
             <div class="col-xs-8">
-              <a href="" class="btn btn-primary" style="margin-bottom: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
+              <a href="{{url('printPenjualan')}}" class="btn btn-primary" style="margin-bottom: 10px; margin-top: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -49,7 +49,7 @@
                   <td>{{date_format(date_create("$datas->tanggal_penjualan"), "d F Y")}}</td>
                   <td>{{$datas->cara_penjualan}}</td>
                   <td>{{$datas->nama_pelanggan}}</td>
-                  <td>{{$datas->total_bayar}}</td>
+                  <td style="text-align: right;">{{ number_format($datas->total_bayar, 2)}}</td>
                   <td>{{$datas->nama_pengguna}}</td>
                 </tr>
                 @endforeach
@@ -65,12 +65,12 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Laporan Detail Penjualan</h3>
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Laporan Detail Penjualan</h3>
             </div>
             <!-- /.box-header -->
             <div class="col-xs-8">
-              <a href="" class="btn btn-primary" style="margin-bottom: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
+              <a href="{{url('demand')}}" class="btn btn-primary" style="margin-bottom: 10px; margin-top: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
             </div>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-striped">
@@ -92,8 +92,8 @@
                   <td>{{date_format(date_create("$datas->tanggal_penjualan"), "d F Y")}}</td>
                   <td>{{$datas->nama_barang}}</td>
                   <td>{{$datas->jumlah_barang}}</td>
-                  <td>{{$datas->harga_jual}}</td>
-                  <td>{{$datas->total_harga}}</td>
+                  <td>{{ number_format($datas->harga_jual, 2)}}</td>
+                  <td>{{ number_format($datas->total_harga, 2)}}</td>
                 </tr>
                 @endforeach
                 </tbody>

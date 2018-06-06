@@ -39,7 +39,7 @@
               <div class="col-xs-5">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="nama" value="{{ $datas->nama_pengguna }}">
+                    <input type="text" class="form-control" name="nama" value="{{ $datas->nama_pengguna }}" required>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@
               <div class="col-xs-3">
                 <div class="form-group" >
                   <!-- text input -->
-                  <select class="form-control" name="jenisKelamin">
+                  <select class="form-control" name="jenisKelamin" required>
                     <option value="Laki-Laki">Laki - Laki</option>
                     <option value="Perempuan">Perempuan</option>
                   </select>
@@ -70,7 +70,7 @@
               <div class="col-xs-3">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="notelp" value="{{$datas->kontak_pengguna}}">
+                    <input type="text" class="form-control" name="notelp" value="{{$datas->kontak_pengguna}}" required>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@
               <div class="col-xs-6">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="alamat" value="{{$datas->alamat_pengguna}}">
+                    <input type="text" class="form-control" name="alamat" value="{{$datas->alamat_pengguna}}" required>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
               <div class="col-xs-4">
                 <div class="form-group" >
                   <!-- text input -->
-                  <input type="text" class="form-control" name="username" value="{{$datas->username}}">
+                  <input type="text" class="form-control" name="username" value="{{$datas->username}}" required>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@
               <div class="col-xs-4">
                 <div class="form-group" >
                   <!-- text input -->
-                  <input type="password" class="form-control" name="password">
+                  <input type="password" class="form-control" name="password" required>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
               <div class="col-xs-3">
                 <div class="form-group" >
                   <!-- text input -->
-                  <select class="form-control" name="jabatan">
+                  <select class="form-control" name="jabatan" required>
                     <option value="Pemilik">Pemilik</option>
                     <option value="Admin">Admin</option>
                   </select>

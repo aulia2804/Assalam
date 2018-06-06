@@ -12,12 +12,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Detail Transaksi Pembelian
+        Detail Retur Pembelian
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-plus"> Pembelian</i></li>
-        <li>Data Transaksi Pembelian</li>
-        <li>Detail Transaksi Pembelian</li>
+        <li><i class="fa fa-minus"> Pembelian</i></li>
+        <li>Data Retur Pembelian</li>
+        <li>Detail Retur Pembelian</li>
       </ol>
     </section>
     <section class="content">
@@ -35,18 +35,14 @@
                     <thead>
                     <tr>
                       <th style="text-align: center;">ID</th>
-                      <th style="text-align: center;">Tanggal Pembelian</th>
-                      <th style="text-align: center;">Tanggal Jatuh Tempo</th>
-                      <th style="text-align: center;">Total</th>
+                      <th style="text-align: center;">Tanggal Retur</th>
                     </tr>
                     </thead>
                     <tbody>
-                      @foreach($data1 as $dat)
+                      @foreach($aa as $ar)
                       <tr>
-                        <td>{{$dat->id_pembelian}}</td>
-                        <td>{{date_format(date_create("$dat->tanggal_pembelian"), "d F Y")}}</td>
-                        <td>{{date_format(date_create("$dat->tanggal_jatuh_tempo"), "d F Y")}}</td>
-                        <td style="text-align: right;">{{ number_format($dat->uang_muka, 2)}}</td>
+                        <td>{{$ar->id_retur_pembelian}}</td>
+                        <td>{{date_format(date_create("$ar->tanggal_retur"), "d F Y")}}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -73,11 +69,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                      @foreach($data2 as $datt)
+                      @foreach($bb as $br)
                       <tr>
-                        <td>{{$datt->nama_pemasok}}</td>
-                        <td>{{$datt->kontak_pemasok}}</td>
-                        <td>{{$datt->alamat_pemasok}}</td>
+                        <td>{{$br->nama_pemasok}}</td>
+                        <td>{{$br->kontak_pemasok}}</td>
+                        <td>{{$br->alamat_pemasok}}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -104,54 +100,21 @@
                 <tr>
                   <th style="text-align: center;">ID</th>
                   <th style="text-align: center;">Nama Barang</th>
-                  <th style="text-align: center;">Satuan</th>
-                  <th style="text-align: center;">Harga Beli</th>
-                  <th style="text-align: center;">Jumlah</th>
-                  <th style="text-align: center;">Sub Total</th>
+                  <th style="text-align: center;">jumlah</th>
+                  <th style="text-align: center;">Harga</th>
+                  <th style="text-align: center;">Total Harga</th>
+                  <th style="text-align: center;">Deskripsi</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach($data3 as $dattt)
+                  @foreach($cc as $cr)
                   <tr>
-                    <td>{{$dattt->id_detail_pembelian}}</td>
-                    <td>{{$dattt->nama_barang}}</td>
-                    <td>{{$dattt->nama_satuan}}</td>
-                    <td style="text-align: right;">{{ number_format($dattt->harga_beli, 2)}}</td>
-                    <td>{{$dattt->jumlah_barang}}</td>
-                    <td style="text-align: right;">{{ number_format($dattt->total_harga, 2)}}</td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>  
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- / .col -->
-        <div class="col-md-12">
-          <div class="box box-default">
-            <div class="box-header with-border" style="background-color: #1B4F72">
-              <h3 class="box-title" style="color: #FDFEFE">Riwayat Pelunasan Hutang</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" style="background-color: #d2d6de">
-              <table id="example4" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th style="text-align: center;">ID</th>
-                  <th style="text-align: center;">Tanggal Pelunasan</th>
-                  <th style="text-align: center;">Jumlah Bayar</th>
-                  <th style="text-align: center;">Status Hutang</th>
-                </tr>
-                </thead>
-                <tbody>
-                  @foreach($data4 as $datttt)
-                  <tr>
-                    <td>{{$datttt->id_pelunasan_hutang}}</td>
-                    <td>{{$datttt->tanggal_pelunasan_hutang}}</td>
-                    <td style="text-align: right;">{{ number_format($datttt->bayar_hutang, 2)}}</td>
-                    <td>{{$datttt->status}}</td>
+                    <td>{{$cr->id_detail_retur}}</td>
+                    <td>{{$cr->nama_barang}}</td>
+                    <td>{{$cr->jumlah_barang}}</td>
+                    <td style="text-align: right;">{{ number_format($cr->harga_beli, 2)}}</td>
+                    <td style="text-align: right;">{{ number_format($cr->total_harga, 2)}}</td>
+                    <td>{{$cr->deskripsi_retur}}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -236,19 +199,6 @@
 <script>
   $(function () {
     $('#example3').DataTable({
-    'paging'      : true,
-    'lengthChange': true,
-    'searching'   : true,
-    'ordering'    : true,
-    'info'        : true,
-    'autoWidth'   : true
-    })
-  })
-</script>
-
-<script>
-  $(function () {
-    $('#example4').DataTable({
     'paging'      : true,
     'lengthChange': true,
     'searching'   : true,

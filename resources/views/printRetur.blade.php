@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <style type="text/css">
-    .clearfix:after {
+
+.clearfix:after {
   content: "";
   display: table;
   clear: both;
@@ -39,11 +40,11 @@ header {
   width: 90px;
 }
 
-h1 {
+h4 {
   border-top: 1px solid  #5D6975;
   border-bottom: 1px solid  #5D6975;
   color: #5D6975;
-  font-size: 2.4em;
+  font-size: 1.5em;
   line-height: 1.4em;
   font-weight: normal;
   text-align: center;
@@ -61,7 +62,7 @@ h1 {
   width: 52px;
   margin-right: 10px;
   display: inline-block;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 #company {
@@ -140,50 +141,60 @@ footer {
   </style>
   <head>
     <meta charset="utf-8">
-    <title>Contoh Aja</title>
+    <title>Retur</title>
   </head>
   <body>
     <header class="clearfix">
-      <h1>Laporan Transaksi Pembelian <br/> Assalam Jaya</h1>
-      <div id="company" class="clearfix">
-        <div>Assalam Jaya</div>
-        <div>Jl. Kemiri - Pituruh,<br /> Desa Rejosari RT. 0/1</div>
-        <div>Kec. Kemiri, Kab. Purworejo</div>
-        <div>HP. 081 280 477 648</div>
-      </div>
+      <h4>Assalam Jaya <br/> Jl. Kemiri-Pituruh, Ds. Rejosari RT.0/1, Kemiri, Purworejo <br/> No. Telp : 081 280 477 648</h4>
+      @foreach($b as $data1)
       <div id="project">
-        <div><span>Tanggal</span> {{date_format(date_create("$tanggal_cetak"), "d F Y")}}</div>
+        <div>Kepada :</div>
+        <div>{{$data1->nama_pemasok}}</div>
+        <div>{{$data1->alamat_pemasok}}</div>
+        <div>{{$data1->kontak_pemasok}}</div>
       </div>
+      @endforeach
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      @foreach($a as $data2)
+        <div id="project">
+          <div>Cara Pembelian :{{$data2->cara_pembelian}}</div>
+          <div>Tanggal Pembelian :{{date_format(date_create("$data2->tanggal_pembelian"), "d F Y")}}</div>
+          <div>Tanggal Jatuh Tempo :{{date_format(date_create("$data2->tanggal_jatuh_tempo"), "d F Y")}}</div>
+        </div>
+      @endforeach
     </header>
     <main>
+      <h4 style="text-align: center;">Detail Barang</h4>
+      <br>
       <table>
         <thead>
           <tr>
-            <th class="service">ID</th>
-            <th>Tanggal Pembelian</th>
-            <th>Tanggal Jatuh Tempo</th>
-            <th>Cara Pembelian</th>
-            <th>Pemasok</th>
-            <th>Total</th>
-            <th>Pegawai</th>
+            <th class="service">No</th>
+            <th class="desc">Tanggal Retur</th>
+            <th>Nama Barang</th>
+            <th>Jumlah Barang</th>
+            <th>Deskripsi</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($data as $datas)
+          <?php $no=1; ?>
+          @foreach($c as $data3)
           <tr>
-            <td class="service">{{$datas->id_pembelian}}</td>
-            <td class="desc">{{date_format(date_create("$datas->tanggal_pembelian"), "d F Y")}}</td>
-            <td class="desc">{{date_format(date_create("$datas->tanggal_jatuh_tempo"), "d F Y")}}</td>
-            <td class="desc">{{$datas->cara_pembelian}}</td>
-            <td class="unit">{{$datas->nama_pemasok}}</td>
-            <td class="qty">{{ number_format($datas->total_bayar, 2)}}</td>
-            <td class="total">{{$datas->nama_pengguna}}</td>
+            <td class="service">{{$no++}}</td>
+            <td class="desc">{{date_format(date_create("$data3->tanggal_retur"), "d F Y")}}</td>
+            <td class="unit">{{$data3->nama_barang}}</td>
+            <td class="qty">{{$data3->jumlah_barang}}</td>
+            <td class="total">{{$data3->deskripsi_retur}}</td>
           </tr>
           @endforeach
         </tbody>
       </table>
-    </main>
     <footer>
+      <div>Tanggal Cetak : {{date_format(date_create("$tanggal_cetak"), "d F Y")}}</div>
       Data yang tercetak dari komputer, sah tanpa tanda tangan dan cap
     </footer>
   </body>

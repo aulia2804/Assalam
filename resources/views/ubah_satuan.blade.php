@@ -45,7 +45,7 @@
               <div class="col-xs-4">
                 <div class="form-group" >
                   <!-- text input -->
-                  <input type="text" class="form-control" value="{{$datas->nama_satuan}}">
+                  <input type="text" class="form-control" value="{{$datas->nama_satuan}}" required>
                 </div>
               </div>
             </div>

@@ -25,8 +25,8 @@
           <div class="row">
             <div class="col-md-5">
               <div class="box box-default">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Transaksi</h3>
+                <div class="box-header with-border" style="background-color: #1B4F72">
+                  <h3 class="box-title" style="color: #FDFEFE">Transaksi</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="background-color: #d2d6de">
@@ -80,8 +80,8 @@
                       @foreach($data1 as $dapat)
                       <tr>
                         <td style="text-align: center;">{{$dapat->id_pembelian}}</td>
-                        <td style="text-align: center;">{{$dapat->total_bayar}}</td>
-                        <td style="text-align: center;">{{$dapat->sisa_hutang}}</td>
+                        <td style="text-align: center;">{{ number_format($dapat->total_bayar, 2)}}</td>
+                        <td style="text-align: center;">{{ number_format($dapat->sisa_hutang, 2)}}</td>
                       </tr> 
                       <?php $i=1; ?>
                       @endforeach
@@ -95,8 +95,8 @@
             <!-- / .col -->
             <div class="col-md-7">
               <div class="box box-default">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Riwayat Pelunasan Hutang</h3>
+                <div class="box-header with-border" style="background-color: #1B4F72">
+                  <h3 class="box-title" style="color: #FDFEFE">Riwayat Pelunasan Hutang</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="background-color: #d2d6de">
@@ -116,7 +116,7 @@
                       <tr>
                         <td>{{$dapat->id_pelunasan_hutang}}</td>
                         <td>{{date_format(date_create("$dapat->tanggal_pelunasan_hutang"), "d F Y")}}</td>
-                        <td>{{$dapat->bayar_hutang}}</td>
+                        <td style="text-align: right;">{{ number_format($dapat->bayar_hutang, 2)}}</td>
                         <td>{{$dapat->status}}</td>
                         <td>
                           @if($i!=0)

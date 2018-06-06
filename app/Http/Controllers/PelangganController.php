@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Pelanggan;
+use Carbon\Carbon;
 use Alert;
+use PDF;
 
 class PelangganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $data = Pelanggan::all();
@@ -21,22 +19,21 @@ class PelangganController extends Controller
         ->with('data', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('transaksi_penjualan');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function unduhpelanggan()
+    {
+        $data = Pelanggan::where('status_pelanggan','Publish')->orderBy('id_pelanggan')->get();
+
+        $tanggal_cetak = Carbon::now();
+
+        $pdf = PDF::loadView('printPelanggan', array('data'=>$data, 'tanggal_cetak'=>$tanggal_cetak));
+        return $pdf->download('Data Pelanggan.pdf'); 
+    }
+
     public function store(Request $request)
     {
         $data = new Pelanggan();
@@ -47,23 +44,11 @@ class PelangganController extends Controller
         return redirect('pelanggan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data = Pelanggan::where('id_pelanggan', $id)->get();
@@ -71,13 +56,6 @@ class PelangganController extends Controller
             ->with('data', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $data = Pelanggan::where('id_pelanggan', $id)->first();
@@ -89,14 +67,22 @@ class PelangganController extends Controller
         return redirect('pelanggan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $a = DB::table('transaksi_penjualan')
+            ->select('pelanggan.id_pelanggan','pelanggan.nama_pelanggan','transaksi_penjualan.id_penjualan','transaksi_penjualan.tanggal_penjualan','detail_penjualan.id_detail_penjualan','pelunasan_piutang.id_pelunasan_piutang')
+            ->join('pelanggan','pelanggan.id_pelanggan','=','transaksi_penjualan.id_pelanggan')
+            ->join('detail_penjualan','transaksi_penjualan.id_penjualan','=','detail_penjualan.id_penjualan')
+            ->join('pelunasan_piutang','transaksi_penjualan.id_penjualan','=','pelunasan_piutang.id_penjualan')
+            ->where('pelanggan.id_pelanggan',$id)
+            ->get();
+        DB::table('pelanggan')
+        ->where('id_pelanggan',$id)
+        ->update([
+            'status_pelanggan' => 'Draft',
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect('pelanggan');
     }
 }

@@ -32,8 +32,8 @@
               <div class="col-xs-5">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="nama" value="{{$data->nama_pengguna}}">
-                    <input type="hidden" name="id_pengguna" value="{{$data->id_pengguna}}">
+                    <input type="text" class="form-control" name="nama" value="{{$data->nama_pengguna}}" required>
+                  
                 </div>
               </div>
             </div>
@@ -47,7 +47,7 @@
               <div class="col-xs-3">
                 <div class="form-group" >
                   <!-- text input -->
-                  <select class="form-control" name="jenisKelamin">
+                  <select class="form-control" name="jenisKelamin" required>
                     <option value="Laki-Laki">Laki - Laki</option>
                     <option value="Perempuan">Perempuan</option>
                   </select>
@@ -64,7 +64,7 @@
               <div class="col-xs-3">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="notelp" value="{{$data->kontak_pengguna}}">
+                    <input type="text" class="form-control" name="notelp" value="{{$data->kontak_pengguna}}" required>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@
               <div class="col-xs-6">
                 <div class="form-group" >
                   <!-- text input -->
-                    <input type="text" class="form-control" name="alamat" value="{{$data->alamat_pengguna}}">
+                    <input type="text" class="form-control" name="alamat" value="{{$data->alamat_pengguna}}" required>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
             </div>
             <!-- /.row -->
             <div class="col-md-6">
-              <a href="" class="btn btn-default" style="margin-top: 25px">Kembali</a>
+              <a href="{{route('beranda.index')}}" class="btn btn-default" style="margin-top: 25px">Kembali</a>
             </div>
             <div class="col-md-6">
               <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Simpan">

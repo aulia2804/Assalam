@@ -43,7 +43,7 @@
             <div class="col-xs-4">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" name="nama" value="{{$datas->nama_pelanggan}}">
+                <input type="text" class="form-control" name="nama" value="{{$datas->nama_pelanggan}}" required>
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
             <div class="col-xs-3">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" name="kontak" value="{{$datas->kontak_pelanggan}}">
+                <input type="text" class="form-control" name="kontak" value="{{$datas->kontak_pelanggan}}" required>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
             <div class="col-xs-6">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" name="alamat" value="{{$datas->alamat_pelanggan}}">
+                <input type="text" class="form-control" name="alamat" value="{{$datas->alamat_pelanggan}}" required>
               </div>
             </div>
           </div>

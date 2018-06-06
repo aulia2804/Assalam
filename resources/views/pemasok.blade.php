@@ -32,7 +32,10 @@
               <h3 class="box-title" style="color: #FDFEFE">Tabel Data Pemasok</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="background-color: #d2d6de">
+              <div class="col-xs-8">
+                <a href="{{url('printPemasok')}}" class="btn btn-primary" style="margin-bottom: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
+              </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -52,7 +55,6 @@
                   <td>{{$datas->alamat_pemasok}}</td>
                   <td>
                     <a href="{{route('ubah_pemasok.edit', $datas->id_pemasok)}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i>Ubah Data</a>
-                    <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
                 @endforeach

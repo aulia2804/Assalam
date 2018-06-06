@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function(){
 
 	Route::resources([
 		'ubah_profil' => 'AdminController',
+		'ubah_sandi' => 'PasswordController',
 		'pengguna' => 'PenggunaController',
 		'tambah_pengguna' => 'PenggunaController',
 		'detail_pengguna' => 'PenggunaController',
@@ -27,10 +28,13 @@ Route::middleware('auth')->group(function(){
 		'hapus_pengguna' => 'PenggunaController',
 		'pelanggan' => 'PelangganController',
 		'ubah_pelanggan' => 'PelangganController',
+		'hapus_pelanggan' => 'PelangganController',
 		'pemasok' => 'PemasokController',
 		'ubah_pemasok' => 'PemasokController',
+		'hapus_pemasok' => 'PemasokController',
 		'barang' => 'BarangController',
 		'ubah_barang' => 'BarangController',
+		'hapus_barang' => 'BarangController',
 		'satuan' => 'SatuanController',
 		'tambah_satuan' => 'SatuanController',
 		'ubah_satuan' => 'SatuanController',
@@ -55,12 +59,30 @@ Route::middleware('auth')->group(function(){
 		'beranda' => 'BerandaController',
 		'laporan_pembelian' => 'LaporanPembelianController',
 		'laporan_penjualan' => 'LaporanPenjualanController',
-
+		'detail_retur' => 'ReturController',
+		'tanggal_beli' => 'PembelianController',
 	]);
 
 	Route::get('printPembelian', 'LaporanPembelianController@unduhpembelian');
+	Route::get('invoice', 'LaporanPembelianController@unduhdetail');
+
+	Route::get('printPenjualan', 'LaporanPenjualanController@unduhpenjualan');
+	Route::get('demand', 'LaporanPenjualanController@unduhdetail');
+
+	Route::get('printBarang', 'BarangController@unduhbarang');
+	
+	Route::get('printPemasok', 'PemasokController@unduhpemasok');
+
+	Route::get('printPelanggan', 'PelangganController@unduhpelanggan');
+	
+	Route::get('printBeli/{id}', 'PembelianController@unduhtransaksi');
+
+	Route::get('printJual/{id}', 'PenjualanController@unduhjual');
+
+	Route::get('printRetur/{id}', 'ReturController@unduhretur');
 
 	Route::post('updateprof', 'AdminController@update_profil');
+	Route::post('sandi', 'PasswordController@ubah_sandi');
 
 	Route::get('hapus_penjualan', 'DePenController@hapuspenjualan');
 	Route::get('profil/{id}', 'AdminController@update');
@@ -78,7 +100,7 @@ Route::middleware('auth')->group(function(){
 	Route::get('autocomplete/{id}', 'TranRetController@autocomplete');
 	Route::get('proses/{id}', 'ReturController@proses');
 
-	Route::get('autocomplete/{id}', 'TranPenController@autocomplete');
+	Route::get('auto/{id}', 'TranPenController@autocomplete');
 	Route::get('autocomplete/{id}', 'DePenController@autocomplete');
 	Route::post('tambah_pelanggan', 'DePenController@tambahPelanggan');
 	Route::post('dpjual', 'DePenController@uangmuka');

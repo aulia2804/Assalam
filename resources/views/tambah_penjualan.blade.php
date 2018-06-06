@@ -37,7 +37,6 @@
                     <th style="text-align: center;">ID</th>
                     <th style="text-align: center;">Tanggal Penjualan</th>
                     <th style="text-align: center;">Cara</th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -45,9 +44,6 @@
                       <td>{{$id->id_penjualan}}</td>
                       <td>{{date('d F Y', strtotime($id->tanggal_penjualan))}}</td>
                       <td>{{$id->cara_penjualan}}</td>
-                      <td>
-                        <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                      </td>
                     </tr>
                   </tbody>
                 </table>  
@@ -67,7 +63,6 @@
                     <th style="text-align: center;">Nama</th>
                     <th style="text-align: center;">Kontak</th>
                     <th style="text-align: center;">Alamat</th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -75,9 +70,6 @@
                       <td>{{$id->nama_pelanggan}}</td>
                       <td>{{$id->kontak_pelanggan}}</td>
                       <td>{{$id->alamat_pelanggan}}</td>
-                      <td>
-                        <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                      </td>
                     </tr>
                   </tbody>
                 </table>  
@@ -97,7 +89,7 @@
                   {{ csrf_field() }}
                 <div class="form-group">
                   <label style="width: 100%;">Nama Barang :</label>
-                  <select class="form-control select2" style="width:75%;" name="barang" id="barang" value="{{ old('barang') }}">
+                  <select class="form-control select2" style="width:75%;" name="barang" id="barang" value="{{ old('barang') }}" required>
                     <option value="">Pilih Barang</option>
                     @foreach($barang as $barangs)
                     <option value="{{$barangs->id_barang}}">{{$barangs->nama_barang}}</option>
@@ -114,7 +106,7 @@
                 <div class="form-group">
                   <label>Jumlah Barang :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 150px" name="jumlah" value="{{ old('jumlah') }}">
+                  <input type="text" class="form-control" style="width: 150px" name="jumlah" value="{{ old('jumlah') }}" required>
                   <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message')}}</label>
                 </div>
                 <!-- /.form-group -->
@@ -154,9 +146,9 @@
               <tr>
                 <td>{{$details->id_detail_penjualan}}</td>
                 <td>{{$details->nama_barang}}</td>
-                <td>{{$details->harga_jual}}</td>
+                <td style="text-align: right;">{{ number_format($details->harga_jual, 2)}}</td>
                 <td>{{$details->jumlah_barang}}</td>
-                <td>{{$details->total_harga}}</td>
+                <td style="text-align: right;">{{ number_format($details->total_harga, 2)}}</td>
                 <td>
                   <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#hapus{{$details->id_detail_penjualan}}">Hapus</button>
                 </td>
@@ -190,7 +182,10 @@
               @endforeach
             </tbody>
           </table>    
-          
+          <div class="col-md-12">
+            <p style="margin-top: 25px">*Pastikan semua data yang anda masukkan sudah benar sebelum klik "Penjualan Selesai"</p>
+            <p>*klik "Batalkan Penjualan" untuk membatalkan penjualan</p>
+          </div>
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
@@ -200,7 +195,7 @@
               </div>
               <div class="col-md-2">
                 <label>
-                  {{$data_total->total_bayar}}
+                  {{ number_format($data_total->total_bayar, 2)}}
                 </label>
               </div>
             </div>
@@ -215,12 +210,12 @@
                 </label>
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control" name="uangmuka" style="width: 80%;">
+                <input type="text" class="form-control" name="uangmuka" style="width: 80%;" required>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Selesai">
+            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Penjualan Selesai">
           </div>
           </form>
           <div class="col-md-6">
@@ -248,10 +243,7 @@
             <!-- /.modal-dialog -->
           </div>
           <!-- /.modal --> 
-          <div class="col-md-12">
-            <p style="margin-top: 25px">*PERINGATAN! membatalkan pembelian akan menghapus data pembelian saat ini</p>
-            <p>*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
-          </div>
+          
         </div>
         <!-- /.box-body -->
       </div>

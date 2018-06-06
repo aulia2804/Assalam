@@ -35,7 +35,6 @@
                     <th style="text-align: center;">ID Retur</th>
                     <th style="text-align: center;">ID Pembelian</th>
                     <th style="text-align: center;">Tanggal Retur</th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -43,9 +42,6 @@
                       <td>{{$dapat_id->id_retur_pembelian}}</td>
                       <td>{{$dapat_id->id_pembelian}}</td>
                       <td>{{date('d F Y', strtotime($dapat_id->tanggal_retur))}}</td>
-                      <td>
-                        <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                      </td>
                     </tr>
                   </tbody>
                 </table>  
@@ -65,7 +61,6 @@
                     <th style="text-align: center;">Nama</th>
                     <th style="text-align: center;">Kontak</th>
                     <th style="text-align: center;">Alamat</th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -73,10 +68,7 @@
                     <tr>
                       <td>{{$dapat->nama_pemasok}}</td>
                       <td>{{$dapat->kontak_pemasok}}</td>
-                      <td>{{$dapat->alamat_pemasok}}</td>
-                      <td>
-                        <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                      </td>
+                      <td>{{$dapat->alamat_pemasok}}</td> 
                     </tr>
                     @endforeach
                   </tbody>
@@ -97,7 +89,7 @@
                   {{ csrf_field() }}
                 <div class="form-group">
                   <label style="width: 100%;">Nama Barang :</label>
-                  <select class="form-control select2" style="width:75%;" name="barang" value="{{ old('barang') }}">
+                  <select class="form-control select2" style="width:75%;" name="barang" value="{{ old('barang') }}" required>
                     <option value="">Pilih Barang</option>
                     @foreach($dapat_barang as $cari)
                     <option value="{{$cari->id_barang}}">{{$cari->nama_barang}}</option>
@@ -109,13 +101,13 @@
                 <div class="form-group">
                   <label>Jumlah Barang :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 25%;" name="jumlah" value="{{ old('jumlah') }}">
+                  <input type="text" class="form-control" style="width: 25%;" name="jumlah" value="{{ old('jumlah') }}" required>
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">
                   <label>Deskripsi Retur :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 100%;" name="deskripsi" value="{{ old('deskripsi') }}">
+                  <input type="text" class="form-control" style="width: 100%;" name="deskripsi" value="{{ old('deskripsi') }}" required>
                 </div>
                 <!-- /.form-group -->
                 <div class="form-group" style="text-align: center;">
@@ -154,9 +146,9 @@
               <tr>
                 <td>{{$details->id_detail_retur}}</td>
                 <td>{{$details->nama_barang}}</td>
-                <td>{{$details->harga_beli}}</td>
+                <td style="text-align: right;">{{ number_format($details->harga_beli, 2)}}</td>
                 <td>{{$details->jumlah_barang}}</td>
-                <td>{{$details->total_harga}}</td>
+                <td style="text-align: right;">{{ number_format($details->total_harga, 2)}}</td>
                 <td>
                   <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#dlt{{$details->id_detail_retur}}">Hapus</button>
                 </td>

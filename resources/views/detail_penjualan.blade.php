@@ -26,8 +26,8 @@
           <div class="row">
             <div class="col-md-6">
               <div class="box box-default">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Transaksi</h3>
+                <div class="box-header with-border" style="background-color: #1B4F72">
+                  <h3 class="box-title" style="color: #FDFEFE">Transaksi</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="background-color: #d2d6de">
@@ -44,7 +44,7 @@
                       <tr>
                         <td>{{$dat->id_penjualan}}</td>
                         <td>{{date_format(date_create("$dat->tanggal_penjualan"), "d F Y")}}</td>
-                        <td>{{$dat->total_bayar}}</td>
+                        <td style="text-align: right;">{{ number_format($dat->total_bayar, 2)}}</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -57,8 +57,8 @@
             <!-- / .col -->
             <div class="col-md-6">
               <div class="box box-default">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Pelanggan</h3>
+                <div class="box-header with-border" style="background-color: #1B4F72">
+                  <h3 class="box-title" style="color: #FDFEFE">Pelanggan</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="background-color: #d2d6de">
@@ -92,8 +92,8 @@
         <!-- / .col -->
         <div class="col-md-12">
           <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Detail Barang</h3>
+            <div class="box-header with-border" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Detail Barang</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="background-color: #d2d6de">
@@ -114,9 +114,9 @@
                     <td>{{$dattt->id_detail_penjualan}}</td>
                     <td>{{$dattt->nama_barang}}</td>
                     <td>{{$dattt->nama_satuan}}</td>
-                    <td>{{$dattt->harga_jual}}</td>
+                    <td style="text-align: right;">{{ number_format($dattt->harga_jual, 2)}}</td>
                     <td>{{$dattt->jumlah_barang}}</td>
-                    <td>{{$dattt->total_harga}}</td>
+                    <td style="text-align: right;">{{ number_format($dattt->total_harga, 2)}}</td>
                   </tr>
                   @endforeach
                 </tbody>

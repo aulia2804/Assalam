@@ -26,8 +26,8 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
           <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Transaksi</h3>
+            <div class="box-header with-border" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Transaksi</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="background-color: #d2d6de;">
@@ -42,14 +42,14 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" >
+                    <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" required>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">
                   <label>Pembayaran :</label>
-                  <select class="form-control" style="width: 200px" name="cara">
+                  <select class="form-control" style="width: 200px" name="cara" required>
                     <option selected="selected" value="Tunai">Tunai</option>
                     <option value="Kredit">Kredit</option>
                   </select>
@@ -63,7 +63,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="datepicker1" name="kredit">
+                    <input type="text" class="form-control pull-right" id="datepicker1" name="kredit" required>
                   </div>
                   <!-- /.input group -->
                   <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message')}}</label> 

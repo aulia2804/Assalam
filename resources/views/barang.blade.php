@@ -28,8 +28,12 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="col-xs-8">
+                <a href="{{url('printBarang')}}" class="btn btn-primary" style="margin-bottom: 10px"><i class="fa fa-print"></i> Unduh PDF</a>
+              </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
+                  <?php $no=1; ?>
                   <tr>
                     <th style="text-align:center">ID</th>
                     <th style="text-align:center">Nama</th>
@@ -46,18 +50,43 @@
                 <tbody>
                 @foreach($data as $datas)
                 <tr>
-                  <td>{{$datas->id_barang}}</td>
+                  <td>{{$no++}}</td>
                   <td>{{$datas->nama_barang}}</td>
-                  <td>{{$datas->harga_beli}}</td>
-                  <td>{{$datas->harga_jual}}</td>
+                  <td style="text-align: right;">{{ number_format($datas->harga_beli, 2)}}</td>
+                  <td style="text-align: right;">{{ number_format($datas->harga_jual, 2)}}</td>
                   <td>{{$datas->stok}}</td>
                   <td>{{$datas->nama_satuan}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
                   <td style="text-align: center;">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_barang}}"><i class="fa fa-pencil"></i></button>
-                    <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
+                 <div class="modal fade" id="hapus{{$datas->id_barang}}">
+                  <div class="modal-dialog" style="witdh:400px">
+                    <div class="modal-content" >
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Peringatan</h4>
+                      </div>
+                      <div class="modal-body">
+                        <!-- text input -->
+                        <p>Anda yakin ingin menghapus pemasok {{$datas->nama_barang}}?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+                        <form action="{{route('barang.destroy', $datas->id_barang)}}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="btn btn-danger">Hapus</button>
+                        </form> 
+                      </div>
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
                 <div class="modal fade" id="update{{$datas->id_barang}}">
                   <div class="modal-dialog">
                     <form action="{{route('barang.update', $datas->id_barang)}}" method="post">
@@ -67,7 +96,7 @@
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Ubah Satuan</h4>
+                        <h4 class="modal-title">Ubah Data Barang</h4>
                       </div>
                       
                       <div class="modal-body">
@@ -76,7 +105,7 @@
                             <h4>Nama</h4>
                           </div>
                           <div class="col-xs-9">
-                            <input type="text" name="nama" class="form-control" value="{{$datas->nama_barang}}">
+                            <input type="text" name="nama" class="form-control" value="{{$datas->nama_barang}}" required>
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
@@ -84,7 +113,7 @@
                             <h4>Harga Beli</h4>
                           </div>
                           <div class="col-xs-9">
-                            <input type="number" name="beli" class="form-control" value="{{$datas->harga_beli}}">
+                            <input type="number" name="beli" class="form-control" value="{{$datas->harga_beli}}" readonly>
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
@@ -92,7 +121,7 @@
                             <h4>Harga Jual</h4>
                           </div>
                           <div class="col-xs-9">
-                            <input type="number" name="jual" class="form-control" value="{{$datas->harga_jual}}">
+                            <input type="number" name="jual" class="form-control" value="{{$datas->harga_jual}}" required>
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
@@ -100,7 +129,7 @@
                             <h4>Stok</h4>
                           </div>
                           <div class="col-xs-9">
-                            <input type="number" name="stock" class="form-control" value="{{$datas->stok}}">
+                            <input type="number" name="stock" class="form-control" value="{{$datas->stok}}" readonly>
                           </div>
                         </div>
                         <div class="form-group col-lg-12">
@@ -108,7 +137,7 @@
                             <h4>Satuan</h4>
                           </div>
                           <div class=" col-xs-9">
-                            <select class="form-control" name="satuan">
+                            <select class="form-control" name="satuan" required>
                               @foreach($data1 as $datas)
                               <option value="{{$datas->id_satuan}}">{{$datas->nama_satuan}}</option>
                               @endforeach
@@ -116,8 +145,6 @@
                           </div>
                         </div>
                       </div>
-
-                      
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
                         <input type="submit" class="btn btn-primary" value="Simpan">

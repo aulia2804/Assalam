@@ -23,8 +23,8 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
           <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title">Retur</h3>
+            <div class="box-header with-border" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Retur</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="background-color: #d2d6de">
@@ -38,7 +38,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="text" class="form-control pull-right" id="datepicker" name="tanggal">
+                    <input type="text" class="form-control pull-right" id="datepicker" name="tanggal" required>
                   </div>
                   <!-- /.input group -->
                   <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message1')}}</label> 
@@ -47,7 +47,7 @@
                 <!-- /.form group -->
                 <div class="form-group">
                   <label style="width: 100%;">ID Pembelian :</label>
-                  <select class="form-control select2" style="width:50%;" name="pembelian" id="pembelian">
+                  <select class="form-control select2" style="width:50%;" name="pembelian" id="pembelian" required>
                     <option value="">Pilih Id Pembelian</option>
                     @foreach($pembelian as $pembelians)
                     <option value="{{$pembelians->id_pembelian}}">{{$pembelians->id_pembelian}}</option>

@@ -15,11 +15,9 @@
     <section class="content-header">
       <h1>
         Pemasok
-        <small>Control Panel</small>
       </h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Home</li>
-        <li>Master</li>
+        <li><i class="fa fa-dashboard"></i>Master</li>
         <li>Pemasok</li>
       </ol>
     </section>
@@ -45,7 +43,7 @@
             <div class="col-xs-4">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" value="{{$datas->nama_pemasok}}" name="nama">
+                <input type="text" class="form-control" value="{{$datas->nama_pemasok}}" name="nama" required>
               </div>
             </div>
           </div>
@@ -59,7 +57,7 @@
             <div class="col-xs-3">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" value="{{$datas->kontak_pemasok}}" name="kontak">
+                <input type="text" class="form-control" value="{{$datas->kontak_pemasok}}" name="kontak" required>
               </div>
             </div>
           </div>
@@ -73,7 +71,7 @@
             <div class="col-xs-6">
               <div class="form-group" >
                 <!-- text input -->
-                <input type="text" class="form-control" value="{{$datas->alamat_pemasok}}" name="alamat">
+                <input type="text" class="form-control" value="{{$datas->alamat_pemasok}}" name="alamat" required>
               </div>
             </div>
           </div>

@@ -20,7 +20,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="user-image" alt="User Image">
             <span class="hidden-xs">
-              {{ \Illuminate\Support\Facades\Auth::user()->rule }}
+              {{ \Illuminate\Support\Facades\Auth::user()->username }}
             </span>
           </a>
           <ul class="dropdown-menu">
@@ -28,7 +28,7 @@
             <li class="user-header">
               <img src="{{URL::to('/assets/dist/img/user2.png')}}" class="img-circle" alt="User Image">
               <p>
-                {{ \Illuminate\Support\Facades\Auth::user()->rule }}
+                {{ \Illuminate\Support\Facades\Auth::user()->username }}
               </p>
             </li>
             @if(\Illuminate\Support\Facades\Auth::user()->rule == 'Pemilik')
@@ -52,7 +52,7 @@
                     <a href="{{route('ubah_profil.index')}}" class="btn btn-info">Ubah Profil</a>
                   </div>
                   <div class="col-xs-6 text-center">
-                    <a href="{{route('ubah_profil.index')}}" class="btn btn-info">Ubah Kata Sandi</a>
+                    <a href="{{route('ubah_sandi.index')}}" class="btn btn-info">Ubah Kata Sandi</a>
                   </div>
                 </div>
                 <!-- /.row -->

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pengguna;
 use DB;
 use Auth;
 use Carbon\Carbon;
 
-class AdminController extends Controller
+class PasswordController extends Controller
 {
+
     public function index()
     {
         $id = Auth::user()->id_pengguna;
@@ -17,29 +17,25 @@ class AdminController extends Controller
             ->select('pengguna.id_pengguna','pengguna.nama_pengguna','pengguna.jenis_kelamin','pengguna.kontak_pengguna','pengguna.alamat_pengguna','pengguna.username')
             ->where('id_pengguna',$id)
             ->first();
-        return view('ubah_profil')->with('data', $data);
+        return view('ubah_sandi')->with('data', $data);
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function update_profil(Request $request)
+    public function ubah_sandi(Request $request)
     {
         $id = Auth::user()->id_pengguna;
         DB::table('pengguna')
         ->where('id_pengguna',$id)
         ->update([
-            'nama_pengguna' => $request->nama,
-            'jenis_kelamin' => $request->jenisKelamin,
-            'kontak_pengguna' => $request->notelp,
-            'alamat_pengguna' => $request->alamat,
-            'username' => $request->username,
+            'password' => bcrypt($request->password),
             'updated_at' => Carbon::now()
         ]);
 
-        return redirect('ubah_profil');
+        return redirect('beranda');
+    }
+
+    public function create()
+    {
+        //
     }
 
     public function store(Request $request)

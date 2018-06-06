@@ -25,8 +25,8 @@
         <div class="col-md-12">
           <div class="col-md-7">
             <div class="box box-default">
-              <div class="box-header with-border">
-                <h3 class="box-title">Transaksi</h3>
+              <div class="box-header with-border" style="background-color: #1B4F72">
+                <h3 class="box-title" style="color: #FDFEFE">Transaksi</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body" style="background-color: #d2d6de">
@@ -37,7 +37,6 @@
                     <th style="text-align: center;">Tanggal Pembelian</th>
                     <th style="text-align: center;">Cara</th>
                     <th style="text-align: center;">Jatuh Tempo</th>
-                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -46,9 +45,6 @@
                       <td>{{date('d F Y', strtotime($id->tanggal_pembelian))}}</td>
                       <td>{{$id->cara_pembelian}}</td>
                       <td>{{date('d F Y', strtotime($id->tanggal_jatuh_tempo))}}</td>
-                      <td>
-                        <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                      </td>
                     </tr>
                   </tbody>
                 </table>  
@@ -59,8 +55,8 @@
           </div>
           <div class="col-md-5">
             <div class="box box-default">
-              <div class="box-header with-border">
-                <h3 class="box-title">Barang & Pemasok</h3>
+              <div class="box-header with-border" style="background-color: #1B4F72">
+                <h3 class="box-title" style="color: #FDFEFE">Barang & Pemasok</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body" style="background-color: #d2d6de">
@@ -69,30 +65,30 @@
                 <div class="form-group">
                   <label>Nama Barang :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 75%;" name="barang" >
+                  <input type="text" class="form-control" style="width: 75%;" name="barang" required>
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">
                   <label>Jumlah Barang :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 100px" name="jumlah" >
+                  <input type="text" class="form-control" style="width: 100px" name="jumlah" required>
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">
                   <label>Harga Beli :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 150px" name="beli" >
+                  <input type="text" class="form-control" style="width: 150px" name="beli" required>
                 </div>
                 <!-- /.form-group -->
                 <div class="form-group">
                   <label>Harga Jual :</label>
                   <!--input-->
-                  <input type="text" class="form-control" style="width: 150px" name="jual" >
+                  <input type="text" class="form-control" style="width: 150px" name="jual" required>
                 </div>
                 <!-- /.form group -->
                 <div class="form-group">
                   <label style="width: 100%;">Satuan :</label>
-                  <select class="form-control select2" style="width: 150px" name="satuan">
+                  <select class="form-control select2" style="width: 150px" name="satuan" required>
                     <option value="">Pilih Satuan</option>
                     @foreach($data2 as $datan)
                     <option value="{{$datan->id_satuan}}">{{$datan->nama_satuan}}</option>
@@ -103,7 +99,7 @@
                 <!-- /.form group -->
                 <div class="form-group">
                   <label style="width: 100%;">Pemasok :</label>
-                  <select class="form-control select2" style="width:75%;" name="pemasok">
+                  <select class="form-control select2" style="width:75%;" name="pemasok" required>
                     <option value="">Pilih Pemasok</option>
                     @foreach($data3 as $datas)
                     <option value="{{$datas->id_pemasok}}">{{$datas->nama_pemasok}}</option>
@@ -125,8 +121,8 @@
         </div>
       </div>
       <div class="box box-default">
-        <div class="box-header">
-          <h3 class="box-title">Daftar Pembelian Barang</h3>
+        <div class="box-header" style="background-color: #1B4F72">
+          <h3 class="box-title" style="color: #FDFEFE">Daftar Pembelian Barang</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body" style="background-color: #d2d6de">
@@ -147,8 +143,8 @@
                 <td>{{$details->id_detail_pembelian}}</td>
                 <td>{{$details->nama_barang}}</td>
                 <td>{{$details->jumlah_barang}}</td>
-                <td>{{$details->harga_beli}}</td>
-                <td>{{$details->total_harga}}</td>
+                <td style="text-align: right;">{{ number_format($details->harga_beli, 2)}}</td>
+                <td style="text-align: right;">{{ number_format($details->total_harga, 2)}}</td>
                 <td>
                   <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#del{{$details->id_detail_pembelian}}">Hapus</button>
                 </td>
@@ -181,7 +177,11 @@
               <!-- /.modal --> 
               @endforeach
             </tbody>
-          </table>     
+          </table>   
+          <div class="col-md-12">
+            <p style="margin-top: 25px">*Pastikan semua data yang anda masukkan sudah benar sebelum klik "Pembelian Selesai"</p>
+            <p>*klik "Batalkan Pembelian" untuk membatalkan pembelian</p>
+          </div>  
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
@@ -191,7 +191,7 @@
               </div>
               <div class="col-md-2">
                 <label>
-                  {{$data_total->total_bayar}}
+                  {{ number_format($data_total->total_bayar, 2)}}
                 </label>
               </div>
             </div>
@@ -206,12 +206,12 @@
                 </label>
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control" name="uangmuka" style="width: 80%;">
+                <input type="text" class="form-control" name="uangmuka" style="width: 80%;" required>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Simpan">
+            <input type="submit" class="btn btn-primary pull-right" style="margin-top: 25px" value="Pembelian Selesai">
           </div>
           </form>
           <div class="col-md-6">
@@ -239,10 +239,6 @@
             <!-- /.modal-dialog -->
           </div>
           <!-- /.modal --> 
-          <div class="col-md-12">
-            <p style="margin-top: 25px">*klik selesai jika semua barang yang dibeli pada saat ini sudah masuk ke dalam tabel</p>
-            <p>*klik "Batalkan Pembelian" untuk membatalkan pembelian</p>
-          </div>
         </div>
         <!-- /.box-body -->
         </div>
@@ -266,19 +262,19 @@
           <div class="form-group">
             <label>Nama :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="nama" >
+            <input type="text" class="form-control" style="width: 100%" name="nama" required>
           </div>
           <!-- /.form-group -->
           <div class="form-group">
             <label>Kontak :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="kontak" >
+            <input type="text" class="form-control" style="width: 100%" name="kontak" required>
           </div>
           <!-- /.form group -->
           <div class="form-group">
             <label>Alamat :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="alamat" >
+            <input type="text" class="form-control" style="width: 100%" name="alamat" required>
           </div>
           <!-- /.form group -->
         </div>
@@ -307,7 +303,7 @@
           <div class="form-group">
             <label>Nama :</label>
             <!--input-->
-            <input type="text" class="form-control" style="width: 100%" name="nama" >
+            <input type="text" class="form-control" style="width: 100%" name="nama" required>
           </div>
           <!-- /.form-group -->
         </div>

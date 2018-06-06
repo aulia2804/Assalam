@@ -24,11 +24,11 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Tabel Data Transaksi Penjualan</h3>
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Tabel Data Transaksi Penjualan</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="background-color: #d2d6de">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -46,12 +46,16 @@
                   <td>{{$datas->id_penjualan}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_penjualan"), "d F Y")}}</td>
                   <td>{{$datas->nama_pelanggan}}</td>
-                  <td>{{$datas->total_bayar}}</td>
-                  <td>{{$datas->uang_muka}}</td>
+                  <td style="text-align: right;">{{ number_format($datas->total_bayar, 2)}}</td>
+                  <td style="text-align: right;">{{ number_format($datas->uang_muka, 2)}}</td>
                   <td>
-                    <a href="{{route('detail_penjualan.show',$datas->id_penjualan)}}" class="btn btn-info btn-xs"></i>Detail</a>
-                    <a href="{{route('lihat_piutang.show', $datas->id_penjualan)}}" class="btn btn-success btn-xs"></i>Piutang</a>
-                    <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a> 
+                    <a href="{{route('detail_penjualan.show',$datas->id_penjualan)}}" class="btn btn-info btn-xs">Detail</a>
+                    @if($datas->sisa_piutang==0)
+                    <a href="{{route('lihat_piutang.show', $datas->id_penjualan)}}" class="btn btn-success btn-xs">Lunas</a>
+                    @else
+                    <a href="{{route('lihat_piutang.show', $datas->id_penjualan)}}" class="btn btn-warning btn-xs">Piutang</a>
+                    @endif
+                    <a href="{{url('printJual', $datas->id_penjualan)}}" class="btn btn-primary btn-xs">Cetak</a>
                   </td>
                 </tr>
                 @endforeach

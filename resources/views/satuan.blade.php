@@ -21,44 +21,37 @@
     </section>
     <section class="content">
       <div class="row">
-        <div class="col-xs-6"></div>
         <div class="col-xs-6">
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Tabel Data Satuan</h3>
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Tambah Satuan Baru</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="col-xs-8">
-                <button type="button" style="margin-bottom:20px" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
-                  Tambah
-                </button>
-              </div>
-              <div class="modal fade" id="modal-default">
-                <div class="modal-dialog">
-                  <form action="{{route('satuan.store')}}" method="post">
+            <div class="box-body" style="background-color: #d2d6de">
+              <form action="{{route('satuan.store')}}" method="post">
                     {{ csrf_field() }}
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">Tambah Satuan Baru</h4>
-                    </div>
-                    <div class="modal-body">
-                      <!-- text input -->
-                      <input type="text" class="form-control" placeholder="Masukkan nama satuan baru.." name="nama">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
-                      <input type="submit" class="btn btn-primary" value="Simpan">
-                    </div>
-                  </div>
-                  </form>
-                  <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
+              <div class="form-group">
+                <label>Nama Satuan :</label>
+                <!--input-->
+                <input type="text" class="form-control" name="nama" required>
               </div>
-              <!-- /.modal -->
+              <!-- /.form group -->
+              <input type="submit" class="btn btn-success" value="Tambah">  
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-xs-6">
+          <div class="box">
+            <div class="box-header" style="background-color: #1B4F72">
+              <h3 class="box-title" style="color: #FDFEFE">Tabel Data Satuan</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="background-color: #d2d6de">
+              <div class="col-xs-8">
+              </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -74,7 +67,6 @@
                   <td>{{$datas->nama_satuan}}</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#default{{$datas->id_satuan}}"><i class="fa fa-pencil"></i></button>
-                    <a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a> 
                   </td>
                 </tr>
                 <div class="modal fade" id="default{{$datas->id_satuan}}">
@@ -90,7 +82,7 @@
                       </div>
                       <div class="modal-body">
                         <!-- text input -->
-                        <input type="text" name="nama" class="form-control" value="{{$datas->nama_satuan}}">
+                        <input type="text" name="nama" class="form-control" value="{{$datas->nama_satuan}}" required>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>

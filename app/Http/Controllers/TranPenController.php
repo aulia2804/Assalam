@@ -61,5 +61,4 @@ class TranPenController extends Controller
         $data = Pelanggan::where('id_pelanggan',$id)->get();
         return Response::json($data);
     }
-    
 }
