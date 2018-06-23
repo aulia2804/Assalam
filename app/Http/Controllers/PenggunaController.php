@@ -73,7 +73,9 @@ class PenggunaController extends Controller
         $data->kontak_pengguna = $request->notelp;
         $data->alamat_pengguna = $request->alamat;
         $data->username = $request->username;
-        $data->password = bcrypt($request->password);
+        if ($request->password) {
+            $data->password = bcrypt($request->password);
+        }
         $data->rule = $request->jabatan;
         $data->save();
         Alert::success('Data berhasil diubah', 'Berhasil!');

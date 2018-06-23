@@ -60,6 +60,7 @@
                     </div>
                     <!-- /.form group -->
                      <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message1')}}</label>
+                     <label style="float: left; font-size: 12px; color:red;">{{(string)Session::get('message3')}}</label>
                     <div class="form-group" style="text-align: center; padding-top: 20px" >
                       <input type="submit" class="btn btn-success" value="Simpan">
                     </div>

@@ -6,6 +6,7 @@
   @include ('header')
   @include ('sidebar')
   <div class="content-wrapper">
+    @include('sweet::alert')
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -49,12 +50,13 @@
                   <td>
                     <a href="{{route('detail.show', $datas->id_pembelian)}}" class="btn btn-info btn-xs"></i>Detail</a>
                     @if($datas->cara_pembelian=='Kredit')
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_pembelian}}">Ubah Jatuh Tempo</button>
-                    @endif
                     @if($datas->sisa_hutang==0)
+                    <button type="button" class="btn btn-primary btn-xs disabled" data-toggle="modal" data-target="#update{{$datas->id_pembelian}}">Ubah Jatuh Tempo</button>
                     <a href="{{route('lihat_hutang.show', $datas->id_pembelian)}}" class="btn btn-success btn-xs"></i>Lunas</a>
                     @else
+                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_pembelian}}">Ubah Jatuh Tempo</button>
                     <a href="{{route('lihat_hutang.show', $datas->id_pembelian)}}" class="btn btn-warning btn-xs"></i>Hutang</a>
+                    @endif
                     @endif
                     <a href="{{url('printBeli', $datas->id_pembelian)}}" class="btn btn-primary btn-xs"></i>cetak</a>
                   </td>

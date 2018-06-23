@@ -38,9 +38,10 @@ class HutangController extends Controller
             ->orderBy('id_pelunasan_hutang','ASC')
             ->first();
 
-        $message1 = '*Tanggal retur tidak boleh kurang dari tanggal pembelian';
-        $message2 = '*Tanggal retur tidak boleh lebih dari tanggal jatuh tempo';
+        $message1 = '*Tanggal pelunasan tidak boleh kurang dari tanggal pembelian';
+        $message2 = '*Tanggal pelunasan tidak boleh lebih dari tanggal jatuh tempo';
         $message3 = '*Pembelian sudah lunas';
+        $message4 = '*Uang yang dibayarkan melebihi sisa hutang';
 
         if(strtotime($request->pelunasan) > strtotime($data->tanggal_pembelian) || strtotime($request->pelunasan) == strtotime($data->tanggal_pembelian))
         {
@@ -52,32 +53,37 @@ class HutangController extends Controller
                 }
                 else
                 {
-                    $q= DB::table('pelunasan_hutang')
-                    ->select(DB::raw('id_pembelian as id'), DB::raw('sum(bayar_hutang) as total'))
-                    ->where('id_pembelian',$request->id_pembelian)
-                    ->first();
-                    $sisa=$data->total_bayar-($q->total+$request->uang);
-                    
-                    DB::table('transaksi_pembelian')
-                    ->where('id_pembelian',$request->id_pembelian)
-                    ->update([
-                        'sisa_hutang' => $sisa,
-                        'updated_at' => Carbon::now()
-                    ]);
-
-                    $hutang = new PelunasanHutang;
-                    $hutang->id_pembelian = $request->id_pembelian;
-                    $hutang->tanggal_pelunasan_hutang = date("Y-m-d", strtotime($request->pelunasan));
-                    $hutang->bayar_hutang = $request->uang;
-                    if ($sisa!=0) {
-                        $hutang->status = 'Belum Lunas';
+                    if ($request->uang>$data->sisa_hutang) {
+                        return redirect()->route('pelunasan_hutang.show',['id'=>$request->id_pembelian])
+                        ->with(compact('message4'));
                     } else {
-                        $hutang->status = 'Lunas';
-                    }
-                    $hutang->save();
+                        $q= DB::table('pelunasan_hutang')
+                        ->select(DB::raw('id_pembelian as id'), DB::raw('sum(bayar_hutang) as total'))
+                        ->where('id_pembelian',$request->id_pembelian)
+                        ->first();
+                        $sisa=$data->total_bayar-($q->total+$request->uang);
+                        
+                        DB::table('transaksi_pembelian')
+                        ->where('id_pembelian',$request->id_pembelian)
+                        ->update([
+                            'sisa_hutang' => $sisa,
+                            'updated_at' => Carbon::now()
+                        ]);
 
-                    Alert::success('Data berhasil ditambah','Berhasil!');
-                    return redirect()->route('pelunasan_hutang.show',['id'=>$request->id_pembelian]);
+                        $hutang = new PelunasanHutang;
+                        $hutang->id_pembelian = $request->id_pembelian;
+                        $hutang->tanggal_pelunasan_hutang = date("Y-m-d", strtotime($request->pelunasan));
+                        $hutang->bayar_hutang = $request->uang;
+                        if ($sisa!=0) {
+                            $hutang->status = 'Belum Lunas';
+                        } else {
+                            $hutang->status = 'Lunas';
+                        }
+                        $hutang->save();
+
+                        Alert::success('Data berhasil ditambah','Berhasil!');
+                        return redirect()->route('pelunasan_hutang.show',['id'=>$request->id_pembelian]);
+                    }
                 }
             }
             else

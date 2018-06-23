@@ -168,7 +168,7 @@ footer {
       @endforeach
     </header>
     <main>
-      <h4 style="text-align: center;">Detail Barang</h4>
+      <h4 style="text-align: center;">Detail Retur Barang</h4>
       <br>
       <table>
         <thead>

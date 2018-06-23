@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function(){
 		'laporan_penjualan' => 'LaporanPenjualanController',
 		'detail_retur' => 'ReturController',
 		'tanggal_beli' => 'PembelianController',
+		'deskripsi_retur' => 'ReturController',
 	]);
 
 	Route::get('printPembelian', 'LaporanPembelianController@unduhpembelian');
@@ -69,6 +70,8 @@ Route::middleware('auth')->group(function(){
 	Route::get('printPenjualan', 'LaporanPenjualanController@unduhpenjualan');
 	Route::get('demand', 'LaporanPenjualanController@unduhdetail');
 
+	Route::get('aktif/{id}', 'BarangController@aktif');
+	Route::get('tidakaktif/{id}', 'BarangController@tidakaktif');
 	Route::get('printBarang', 'BarangController@unduhbarang');
 	
 	Route::get('printPemasok', 'PemasokController@unduhpemasok');

@@ -140,11 +140,11 @@ footer {
   </style>
   <head>
     <meta charset="utf-8">
-    <title>Contoh Aja</title>
+    <title>Data Pemasok</title>
   </head>
   <body>
     <header class="clearfix">
-      <h1>Data Barang <br/> Assalam Jaya</h1>
+      <h1>Data Pemasok <br/> Assalam Jaya</h1>
       <div id="company" class="clearfix">
         <div>Assalam Jaya</div>
         <div>Jl. Kemiri - Pituruh,<br /> Desa Rejosari RT. 0/1</div>
@@ -152,9 +152,6 @@ footer {
         <div>HP. 081 280 477 648</div>
       </div>
       <div id="project">
-        <div><span>Toko</span> Assalam Jaya</div>
-        <div><span>Pemilik</span> Salamun</div>
-        <div><span>Alamat</span> Ds. Rejosari RT.0/1, Kemiri, Purworejo</div>
         <div><span>Tanggal</span> {{date_format(date_create("$tanggal_cetak"), "d F Y")}}</div>
       </div>
     </header>

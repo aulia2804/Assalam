@@ -35,7 +35,7 @@ class SatuanController extends Controller
             $data = new Satuan();
             $data->nama_satuan = $request->nama;
             $data->save();
-            Alert::warning('Data berhasil ditambah', 'Berhasil!');
+            Alert::success('Data berhasil ditambah', 'Berhasil!');
             return redirect('satuan');
         }
     }

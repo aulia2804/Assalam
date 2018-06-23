@@ -201,13 +201,21 @@
           <div class="box-body">
             <div class="row">
               <div class="col-md-10">
+                @if($id->cara_pembelian=='Kredit')
                 <label class="pull-right">
                   Uang Muka
                 </label>
+                @else
+                <label class="pull-right">
+                  Pembayaran
+                </label>
+                @endif
               </div>
               <div class="col-md-2">
-                <input type="text" class="form-control" name="uangmuka" style="width: 80%;" required>
+                <input type="text" class="form-control" name="uangmuka" style="width: 80%;" value="{{ old('uangmuka') }}" required>
               </div>
+              <label style="float: right; font-size: 12px; color:red;">{{(string)Session::get('message')}}</label>
+              <label style="float: right; font-size: 12px; color:red;">{{(string)Session::get('message1')}}</label>
             </div>
           </div>
           <div class="col-md-12">

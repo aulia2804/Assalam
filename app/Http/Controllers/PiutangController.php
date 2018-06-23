@@ -41,6 +41,7 @@ class PiutangController extends Controller
 
         $message1 = '*Penjualan sudah lunas';
         $message2 = '*Tanggal pelunasan tidak boleh kurang dari tanggal penjualan';
+        $message3 = '*Uang yang dibayarkan melebihi sisa piutang';
 
         if(strtotime($request->pelunasan) > strtotime($data->tanggal_penjualan) || strtotime($request->pelunasan) == strtotime($data->tanggal_penjualan))
         {
@@ -51,32 +52,37 @@ class PiutangController extends Controller
             }
             else
             {
-                $q= DB::table('pelunasan_piutang')
-                ->select(DB::raw('id_penjualan as id'), DB::raw('sum(bayar_piutang) as total'))
-                ->where('id_penjualan',$request->id_penjualan)
-                ->first();
-                $sisa=$data->total_bayar-($q->total+$request->uang);
-                
-                DB::table('transaksi_penjualan')
-                ->where('id_penjualan',$request->id_penjualan)
-                ->update([
-                    'sisa_piutang' => $sisa,
-                    'updated_at' => Carbon::now()
-                ]);
-
-                $piutang = new PelunasanPiutang;
-                $piutang->id_penjualan = $request->id_penjualan;
-                $piutang->tanggal_pelunasan_piutang = date("Y-m-d", strtotime($request->pelunasan));
-                $piutang->bayar_piutang = $request->uang;
-                if ($sisa!=0) {
-                    $piutang->status = 'Belum Lunas';
+                if ($request->uang>$data->sisa_piutang) {
+                    return redirect()->route('pelunasan_piutang.show',['id'=>$request->id_penjualan])
+                    ->with(compact('message3'));
                 } else {
-                    $piutang->status = 'Lunas';
-                }
-                $piutang->save();
+                    $q= DB::table('pelunasan_piutang')
+                    ->select(DB::raw('id_penjualan as id'), DB::raw('sum(bayar_piutang) as total'))
+                    ->where('id_penjualan',$request->id_penjualan)
+                    ->first();
+                    $sisa=$data->total_bayar-($q->total+$request->uang);
+                    
+                    DB::table('transaksi_penjualan')
+                    ->where('id_penjualan',$request->id_penjualan)
+                    ->update([
+                        'sisa_piutang' => $sisa,
+                        'updated_at' => Carbon::now()
+                    ]);
 
-                Alert::success('Data berhasil ditambah','Berhasil!');
-                return redirect()->route('pelunasan_piutang.show',['id'=>$request->id_penjualan]);
+                    $piutang = new PelunasanPiutang;
+                    $piutang->id_penjualan = $request->id_penjualan;
+                    $piutang->tanggal_pelunasan_piutang = date("Y-m-d", strtotime($request->pelunasan));
+                    $piutang->bayar_piutang = $request->uang;
+                    if ($sisa!=0) {
+                        $piutang->status = 'Belum Lunas';
+                    } else {
+                        $piutang->status = 'Lunas';
+                    }
+                    $piutang->save();
+
+                    Alert::success('Data berhasil ditambah','Berhasil!');
+                    return redirect()->route('pelunasan_piutang.show',['id'=>$request->id_penjualan]);
+                }
             }
         }
         else

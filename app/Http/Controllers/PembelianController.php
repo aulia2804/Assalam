@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\TransaksiPembelian;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -74,6 +75,7 @@ class PembelianController extends Controller
         $pdf = PDF::loadView('printBeli', array('data1'=>$data1, 'data2'=>$data2, 'data3'=>$data3, 'data4'=>$data4, 'tanggal_cetak'=>$tanggal_cetak));
         return $pdf->download('Pembelian.pdf'); 
     }
+
     public function create()
     {
         //
@@ -136,7 +138,23 @@ class PembelianController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $tanggal = TransaksiPembelian::where('id_pembelian',$id)->first();
+
+        if (strtotime($request->jatuhtempo) < strtotime($tanggal->tanggal_jatuh_tempo)) {
+            Alert::warning('Tanggal tidak boleh kurang dari sebelumnya', 'Kesalahan!');
+            return redirect('data_transaksi_pembelian');
+        } else {
+            DB::table('transaksi_pembelian')
+                ->where('id_pembelian', $id)
+                ->update([
+                'tanggal_jatuh_tempo' => date('Y-m-d',strtotime($request->jatuhtempo)),
+                'updated_at' => Carbon::now()
+            ]);
+
+            Alert::success('Tanggal berhasil diubah', 'Berhasil!');
+            return redirect('data_transaksi_pembelian');
+        }
+        
     }
 
     public function destroy($id)

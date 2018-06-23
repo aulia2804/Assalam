@@ -185,20 +185,20 @@ footer {
           <tr>
             <td class="service">{{$no++}}</td>
             <td class="desc">{{$c->nama_barang}}</td>
-            <td class="unit">{{$c->harga_beli}}</td>
+            <td class="unit">{{ number_format($c->harga_beli, 2)}}</td>
             <td class="qty">{{$c->jumlah_barang}}</td>
-            <td class="total">{{$c->total_harga}}</td>
+            <td class="total">{{ number_format($c->total_harga, 2)}}</td>
           </tr>
           @endforeach
 
           @foreach($data1 as $d)
           <tr>
             <td colspan="4">Total</td>
-            <td class="total">{{$d->total_bayar}}</td>
+            <td class="total">{{ number_format($d->total_bayar, 2)}}</td>
           </tr>
           <tr>
             <td colspan="4">Dibayarkan</td>
-            <td class="total">{{$d->uang_muka}}</td>
+            <td class="total">{{ number_format($d->uang_muka, 2)}}</td>
           </tr>
           @endforeach
         </tbody>
@@ -222,14 +222,14 @@ footer {
           <tr>
             <td class="service">{{$no++}}</td>
             <td class="desc">{{date_format(date_create("$d->tanggal_pelunasan_piutang"), "d F Y")}}</td>
-            <td class="unit">{{$d->bayar_piutang}}</td>
+            <td class="unit">{{ number_format($d->bayar_piutang, 2)}}</td>
             <td class="qty">{{$d->status}}</td>
           </tr>
           @endforeach
           @foreach($data1 as $d)
           <tr>
             <td colspan="3" class="grand total">Sisa Pembayaran</td>
-            <td class="grand total">{{$d->sisa_piutang}}</td>
+            <td class="grand total">{{ number_format($d->sisa_piutang, 2)}}</td>
           </tr>
           @endforeach
         </tbody>

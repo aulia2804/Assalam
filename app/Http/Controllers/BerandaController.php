@@ -33,12 +33,12 @@ class BerandaController extends Controller
             ->where('status_pembelian', 'Publish')
             ->first();
 
-        $hasil=$jual->total-$beli->total;
-
         $barang = DB::table('barang')
         ->select('id_barang')
         ->where('status_barang', 'Publish')
         ->count();
+
+        $hasil=$jual->total-$beli->total;
 
         $stok = DB::table('barang')
         ->select('barang.id_barang','barang.nama_barang','barang.stok')

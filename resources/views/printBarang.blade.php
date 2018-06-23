@@ -140,7 +140,7 @@ footer {
   </style>
   <head>
     <meta charset="utf-8">
-    <title>Contoh Aja</title>
+    <title>Data Barang</title>
   </head>
   <body>
     <header class="clearfix">
@@ -152,9 +152,6 @@ footer {
         <div>HP. 081 280 477 648</div>
       </div>
       <div id="project">
-        <div><span>Toko</span> Assalam Jaya</div>
-        <div><span>Pemilik</span> Salamun</div>
-        <div><span>Alamat</span> Ds. Rejosari RT.0/1, Kemiri, Purworejo</div>
         <div><span>Tanggal</span> {{date_format(date_create("$tanggal_cetak"), "d F Y")}}</div>
       </div>
     </header>
@@ -176,8 +173,8 @@ footer {
           <tr>
             <td class="service">{{$datas->id_barang}}</td>
             <td class="desc">{{$datas->nama_barang}}</td>
-            <td class="unit">{{$datas->harga_beli}}</td>
-            <td class="unit">{{$datas->harga_jual}}</td>
+            <td class="unit">{{ number_format($datas->harga_beli, 2)}}</td>
+            <td class="unit">{{ number_format($datas->harga_jual, 2)}}</td>
             <td class="unit">{{$datas->stok}}</td>
             <td class="desc">{{$datas->nama_satuan}}</td>
             <td class="desc">{{$datas->nama_pemasok}}</td>

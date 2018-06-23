@@ -54,11 +54,16 @@
                   <td>{{$datas->nama_barang}}</td>
                   <td style="text-align: right;">{{ number_format($datas->harga_beli, 2)}}</td>
                   <td style="text-align: right;">{{ number_format($datas->harga_jual, 2)}}</td>
-                  <td>{{$datas->stok}}</td>
+                  <td style="text-align: right;">{{$datas->stok}}</td>
                   <td>{{$datas->nama_satuan}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
                   <td style="text-align: center;">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_barang}}"><i class="fa fa-pencil"></i></button>
+                    @if($datas->status_barang=='Publish')
+                    <a href="{{url('aktif', $datas->id_barang)}}" class="btn btn-success btn-xs"></i>Aktif</a>
+                    @else
+                    <a href="{{url('tidakaktif', $datas->id_barang)}}" class="btn btn-danger btn-xs"></i>Non Aktif</a>
+                    @endif
                   </td>
                 </tr>
                  <div class="modal fade" id="hapus{{$datas->id_barang}}">

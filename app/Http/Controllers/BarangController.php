@@ -18,10 +18,9 @@ class BarangController extends Controller
     {
         $data = DB::table('barang')
                 ->select('barang.id_barang','barang.nama_barang','barang.harga_beli',
-                'barang.harga_jual','barang.stok','satuan.nama_satuan','pemasok.nama_pemasok')
+                'barang.harga_jual','barang.stok','barang.status_barang','satuan.nama_satuan','pemasok.nama_pemasok')
                 ->join('pemasok','pemasok.id_pemasok','=','barang.id_pemasok')
                 ->join('satuan','satuan.id_satuan','=','barang.id_satuan')
-                ->where('status_barang','Publish')
                 ->orderBy('id_barang')
                 ->get();
         $data2 = Satuan::all();
@@ -84,14 +83,57 @@ class BarangController extends Controller
 
     public function destroy($id)
     {
-        DB::table('barang')
-        ->where('id_barang',$id)
-        ->update([
-            'status_barang' => 'Draft',
-            'updated_at' => Carbon::now()
-        ]);
+        //
+    }
 
-        Alert::success('Barang berhasil dihapus','Berhasil!');
+    public function aktif($id)
+    {
+        DB::table('barang')
+                ->where('id_barang', $id)
+                ->update([
+                'status_barang' => 'Draft',
+                'updated_at' => Carbon::now()
+            ]);
         return redirect('barang');
+    }
+
+    public function tidakaktif($id)
+    {   
+        DB::table('barang')
+                ->where('id_barang', $id)
+                ->update([
+                'status_barang' => 'Publish',
+                'updated_at' => Carbon::now()
+            ]);
+        return redirect('barang');
+    
+        // $barang = Barang::where('id_barang',$id)->first();
+        // $tes = Barang::where('nama_barang', $barang->nama_barang)->where('status_barang','Publish')
+        // ->count();
+        // if ($tes>0) {
+        //     $cek = Barang::where('nama_barang',$barang->nama_barang)->where('status_barang','Publish')->first();
+        //     if($barang->id_pemasok==$cek->id_pemasok){
+        //         DB::table('barang')
+        //             ->where('id_barang', $id)
+        //             ->update([
+        //             'status_barang' => 'Publish',
+        //             'updated_at' => Carbon::now()
+        //         ]);
+        //         Alert::success('Barang berhasil diaktifkan','Berhasil!');
+        //         return redirect('barang');
+        //     }else{
+        //         Alert::warning('Nama pemasok berbeda','Kesalahan!');
+        //         return redirect('barang');
+        //     }
+        // } else {
+        //     DB::table('barang')
+        //         ->where('id_barang', $id)
+        //         ->update([
+        //         'status_barang' => 'Publish',
+        //         'updated_at' => Carbon::now()
+        //     ]);
+        //     Alert::success('Barang berhasil diaktifkan','Berhasil!');
+        //     return redirect('barang');
+        // } 
     }
 }

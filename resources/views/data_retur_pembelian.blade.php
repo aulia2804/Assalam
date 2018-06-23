@@ -46,7 +46,7 @@
                 <tbody>
                 @foreach($data as $datas)
                 <tr>
-                  <td>{{$datas->id_detail_retur}}</td>
+                  <td>{{$datas->id_retur_pembelian}}</td>
                   <td>{{date_format(date_create("$datas->tanggal_retur"), "d F Y")}}</td>
                   <td>{{$datas->nama_barang}}</td>
                   <td>{{$datas->nama_pemasok}}</td>
@@ -60,15 +60,40 @@
                     @endif
                   </td>
                   <td>
-                    <a href="{{route('detail_retur.show',$datas->id_detail_retur)}}" class="btn btn-info btn-xs"></i>Detail</a>
+                    <a href="{{route('detail_retur.show',$datas->id_retur_pembelian)}}" class="btn btn-info btn-xs"></i>Detail</a>
                     @if($datas->proses=='Proses')
-                    <a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 
-                    <a href="{{url('printRetur', $datas->id_detail_retur)}}" class="btn btn-primary btn-xs">Cetak</a> 
+                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#update{{$datas->id_detail_retur}}"><i class="fa fa-pencil"></i></button>
+                    <a href="{{url('printRetur', $datas->id_retur_pembelian)}}" class="btn btn-primary btn-xs">Cetak</a> 
                     @else
-                    <a href="{{url('printRetur', $datas->id_detail_retur)}}" class="btn btn-primary btn-xs">Cetak</a> 
+                    <a href="{{url('printRetur', $datas->id_retur_pembelian)}}" class="btn btn-primary btn-xs">Cetak</a> 
                     @endif
                   </td>
                 </tr>
+                <div class="modal fade" id="update{{$datas->id_detail_retur}}">
+                  <div class="modal-dialog">
+                    <form action="{{route('deskripsi_retur.update', $datas->id_detail_retur)}}" method="post">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">Ubah Deskripsi Retur</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <label>Deskripsi Retur :</label>
+                              <input type="text" class="form-control" name="deskripsi" required>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                          <input type="submit" class="btn btn-primary" value="Simpan">
+                        </div>  
+                      </div>
+                    </form>
+                  </div>
+                </div>
                 @endforeach
                 </tbody>
               </table>

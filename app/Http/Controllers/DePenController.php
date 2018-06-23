@@ -42,7 +42,7 @@ class DePenController extends Controller
             ->orderBy('id_detail_penjualan','ASC')
             ->get();
         $satuan = Satuan::all();
-        $barang = Barang::all();
+        $barang = Barang::where('status_barang','Publish')->get();
         return view('tambah_penjualan')
         ->with('detail', $detail)
         ->with('barang', $barang)
@@ -129,28 +129,71 @@ class DePenController extends Controller
 
         $sisa = $id->total_bayar-$request->uangmuka;
 
-        DB::table('transaksi_penjualan')
-            ->where('id_penjualan', $id->id_penjualan)
-            ->update([
-            'uang_muka' => $request->uangmuka,
-            'sisa_piutang' => $sisa,
-            'updated_at' => Carbon::now()
-        ]);
+        if ($id->cara_penjualan=='Kredit') {
+            if ($request->uangmuka>$id->total_bayar) {
+                $message1='Kredit, uang muka tidak boleh lebih dari total';
+                return redirect('tambah_penjualan')
+                ->with(compact('message1'))
+                ->withInput($request->only('uangmuka'));
+            } else {
+                DB::table('transaksi_penjualan')
+                    ->where('id_penjualan', $id->id_penjualan)
+                    ->update([
+                    'uang_muka' => $request->uangmuka,
+                    'sisa_piutang' => $sisa,
+                    'updated_at' => Carbon::now()
+                ]);
 
-        $sisa = $id->total_bayar-$request->uangmuka;
+                $sisa = $id->total_bayar-$request->uangmuka;
 
-        $pelunasan = new PelunasanPiutang();
-        $pelunasan->id_penjualan = $id->id_penjualan;
-        $pelunasan->tanggal_pelunasan_piutang = $id->tanggal_penjualan;
-        $pelunasan->bayar_piutang = $request->uangmuka;
-        if($sisa!=0){
-            $pelunasan->status = 'Belum Lunas';
-        }else{
-            $pelunasan->status = 'Lunas';
+                $pelunasan = new PelunasanPiutang();
+                $pelunasan->id_penjualan = $id->id_penjualan;
+                $pelunasan->tanggal_pelunasan_piutang = $id->tanggal_penjualan;
+                $pelunasan->bayar_piutang = $request->uangmuka;
+                if($sisa!=0){
+                    $pelunasan->status = 'Belum Lunas';
+                }else{
+                    $pelunasan->status = 'Lunas';
+                }
+                $pelunasan->status_piutang = 'Publish';
+                $pelunasan->save();
+                return redirect('data_transaksi_penjualan');
+            }
+            
+        } else {
+            if ($request->uangmuka>$id->total_bayar || $request->uangmuka<$id->total_bayar) {
+                $message='Tunai, uang muka tidak boleh kurang/lebih dari total';
+
+                return redirect('tambah_penjualan')
+                ->with(compact('message'))
+                ->withInput($request->only('uangmuka'));
+            } else {
+                DB::table('transaksi_penjualan')
+                    ->where('id_penjualan', $id->id_penjualan)
+                    ->update([
+                    'uang_muka' => $request->uangmuka,
+                    'sisa_piutang' => $sisa,
+                    'updated_at' => Carbon::now()
+                ]);
+
+                $sisa = $id->total_bayar-$request->uangmuka;
+
+                $pelunasan = new PelunasanPiutang();
+                $pelunasan->id_penjualan = $id->id_penjualan;
+                $pelunasan->tanggal_pelunasan_piutang = $id->tanggal_penjualan;
+                $pelunasan->bayar_piutang = $request->uangmuka;
+                if($sisa!=0){
+                    $pelunasan->status = 'Belum Lunas';
+                }else{
+                    $pelunasan->status = 'Lunas';
+                }
+                $pelunasan->status_piutang = 'Publish';
+                $pelunasan->save();
+                return redirect('data_transaksi_penjualan');
+            }
+            
         }
-        $pelunasan->status_piutang = 'Publish';
-        $pelunasan->save();
-        return redirect('data_transaksi_penjualan');
+        
     }
 
     public function show($id)

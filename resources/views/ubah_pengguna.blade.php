@@ -112,7 +112,7 @@
               <div class="col-xs-4">
                 <div class="form-group" >
                   <!-- text input -->
-                  <input type="password" class="form-control" name="password" required>
+                  <input type="password" class="form-control" name="password">
                 </div>
               </div>
             </div>
@@ -127,8 +127,14 @@
                 <div class="form-group" >
                   <!-- text input -->
                   <select class="form-control" name="jabatan" required>
-                    <option value="Pemilik">Pemilik</option>
-                    <option value="Admin">Admin</option>
+                    <option <?php if ($datas->rule=='Pemilik') {
+                      echo "selected";
+                    }
+                     ?> value="Pemilik">Pemilik</option>
+                    <option  <?php if ($datas->rule=='Admin') {
+                      echo "selected";
+                    }
+                     ?> value="Admin">Admin</option>
                   </select>
                 </div>
               </div>
